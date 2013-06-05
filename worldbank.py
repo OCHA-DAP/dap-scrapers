@@ -37,6 +37,7 @@ SI.POV.GINI""".strip().split('\n')
    """
 
 def getcountry(threeletter="PAK"):
+    print threeletter
     value = {'dsID':'World Bank',
              'region':threeletter,
              'source':'World Bank:' + threeletter,
@@ -66,7 +67,6 @@ def getcountry(threeletter="PAK"):
 
         indicator = {'indID':vdict['indID']}
         nameunits = re.search('(.*)\((.*)\)',vdict['indID'])
-        print nameunits
         if nameunits:
             (indicator['name'], indicator['units'])=nameunits.groups()
         else:
