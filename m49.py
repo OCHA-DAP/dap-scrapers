@@ -3,7 +3,6 @@ import messytables
 import xypath
 import StringIO
 import json
-import requests_cache
 from hamcrest import contains_string
 import orm
 import lxml.html
@@ -14,7 +13,6 @@ import dateutil.parser
    Indicator: indID, name, units
    """
 
-requests_cache.install_cache("cache")
 baseurl = "http://unstats.un.org/unsd/methods/m49/m49alpha.htm"
 
 html = requests.get(baseurl).content
