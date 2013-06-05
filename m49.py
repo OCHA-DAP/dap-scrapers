@@ -31,8 +31,8 @@ dataset = {'dsID':'m49',
            'name':'m49'}
 
 indicators = [{
-                'indID':'m49-alpha',
-                'name':'m49-alpha',
+                'indID':'m49-name',
+                'name':'m49-name',
                 'units':'string'
               }, {
                 'indID':'m49-num',
@@ -55,7 +55,7 @@ for messy in mt_prune:
     countries = country_header.extend(y=1)
     num_code_header = countries.shift(x=-1)
     alpha_j = alpha_code_header.junction(countries)
-    num_j = country_header.junction(num_code_header)
+    num_j = alpha_code_header.junction(num_code_header)
     alphas = [[x.value.strip() for x in row[1:]] for row in alpha_j]
     nums = [[x.value.strip() for x in row[1:]] for row in num_j]
     v_template = {'dsID':'m49',
@@ -65,10 +65,12 @@ for messy in mt_prune:
     builder = []
     for entry in alphas:
         v=dict(v_template)
-        v.update({'value':entry[1], 'region':entry[0], 'indID':'m49-alpha'})
+        v.update({'value':entry[0], 'region':entry[1], 'indID':'m49-name'})
         orm.session.merge(orm.Value(**v))
+        if 'GBR' in repr(v): print v
     for entry in nums:
         v=dict(v_template)
         v.update({'value':entry[0], 'region':entry[1], 'indID':'m49-num'})
         orm.session.merge(orm.Value(**v))
+        if 'GBR' in repr(v): print v
     orm.session.commit()
