@@ -42,7 +42,7 @@ orm.send(orm.DataSet, dataset)
 for x in indicators: orm.send(orm.Indicator, x)
 
 mt = messytables.HTMLTableSet(fh)
-mt_prune = [x for x in mt if json.loads(x.name).get('cellpadding')=="2"]
+mt_prune = [x for x in mt.tables if json.loads(x.name).get('cellpadding')=="2"]
 assert len(mt_prune)==1
 
 for messy in mt_prune:
