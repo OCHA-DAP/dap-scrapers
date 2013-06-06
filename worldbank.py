@@ -1,8 +1,11 @@
+import StringIO
+import requests
 import xypath
 import messytables
 from hamcrest import equal_to, is_in
 from orm import session, Value, DataSet, Indicator, send
-import datetime
+import orm
+import dl
 import re
 indicator_list = """
 SP.POP.DPND.OL
@@ -36,6 +39,18 @@ SI.POV.GINI""".strip().split('\n')
    Indicator: indID, name, units
    """
 
+
+dataset = {'dsID':'World Bank',
+           'last_updated':None,
+           'last_scraped':orm.now(),
+           'name': 'World Bank'}
+    
+send(DataSet, dataset)
+
+def getcountrylist():
+    for value in session.query(Value).filter(Value.indID == "m49-name").all():
+        yield value.region
+
 def getcountry(threeletter="PAK"):
     print threeletter
     value = {'dsID':'World Bank',
@@ -43,23 +58,21 @@ def getcountry(threeletter="PAK"):
              'source':'World Bank:' + threeletter,
              'is_number':True}
     
-    dataset = {'dsID':'World Bank',
-               'last_updated':None,
-               'last_scraped':datetime.datetime.now().isoformat(),
-               'name': 'World Bank'}
-    
-    send(DataSet, dataset)
-
-    messy = messytables.excel.XLSTableSet(open("pak.xls", "rb"))
+    baseurl = "http://api.worldbank.org/datafiles/%s_Country_MetaData_en_EXCEL.xls"
+    fh = dl.grab(baseurl%threeletter, [404])
+    if not fh: return
+    messy = messytables.excel.XLSTableSet(fh)
     table = xypath.Table.from_messy(list(messy.tables)[0])
     indicators = table.filter(is_in(indicator_list))
     indname = indicators.shift(x=-1)
-    assert len(indname) == len(indicator_list)
+    if not len(indname) == len(indicator_list):
+        print "missing indicators", [x.value for x in indname]
 
     code = table.filter(equal_to('Indicator Code'))
 
     years = code.extend(x=1)
-    for ind_cell, year_cell, value_cell in indname.junction(years):
+    junction = indname.junction(years)
+    for ind_cell, year_cell, value_cell in junction:
         vdict = dict(value)
         vdict['indID'] = ind_cell.value
         vdict['period'] = year_cell.value
@@ -76,4 +89,5 @@ def getcountry(threeletter="PAK"):
         send(Value, vdict)
     session.commit()
 
-getcountry()
+for country in getcountrylist():
+    getcountry(country)
