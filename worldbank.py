@@ -44,8 +44,8 @@ dataset = {'dsID':'World Bank',
            'last_updated':None,
            'last_scraped':orm.now(),
            'name': 'World Bank'}
-    
-send(DataSet, dataset)
+
+DataSet(**dataset).save()    
 
 def getcountrylist():
     for value in session.query(Value).filter(Value.indID == "m49-name").all():
@@ -85,8 +85,10 @@ def getcountry(threeletter="PAK"):
         else:
             indicator['name']=vdict['indID']
             indicator['units']='uno'
-        send(Indicator, indicator)
-        send(Value, vdict)
+        Indicator(**indicator).save()
+        v = Value(**vdict)
+        if not v.is_blank: 
+            v.save()
     session.commit()
 
 for country in getcountrylist():
