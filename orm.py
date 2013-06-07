@@ -21,7 +21,6 @@ Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 
-
 class Value(Base):
     __tablename__ = "value"
     dsID = Column(String, ForeignKey('dataset.dsID'), primary_key=True)
@@ -32,6 +31,12 @@ class Value(Base):
     is_number = Column(Boolean)
     source = Column(String)
 
+    def is_blank(self):
+        return self.value is None or self.value.strip() == ''
+
+    def save(self):
+        assert not self.is_blank()
+        session.merge(self)
 
 class DataSet(Base):
     __tablename__ = "dataset"
@@ -39,6 +44,9 @@ class DataSet(Base):
     last_updated = Column(String)
     last_scraped = Column(String)
     name = Column(String)
+    
+    def save(self):
+        session.merge(self)
 
 
 class Indicator(Base):
@@ -47,8 +55,13 @@ class Indicator(Base):
     name = Column(String)
     units = Column(String)
 
+    def save(self):
+        session.merge(self)
+
 Base.metadata.create_all(engine)
 
+def purge_blanks(values):
+    return [x for x in values if not x.is_blank]
 
 def send(klass, d, value_is_number=True):
     for item in d:
