@@ -4,7 +4,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 from sqlalchemy import event
+import datetime
 
+def now():
+    return datetime.datetime.now().isoformat()
 
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
@@ -18,7 +21,6 @@ Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 
-
 class Value(Base):
     __tablename__ = "value"
     dsID = Column(String, ForeignKey('dataset.dsID'), primary_key=True)
@@ -29,6 +31,14 @@ class Value(Base):
     is_number = Column(Boolean)
     source = Column(String)
 
+    def is_blank(self):
+        if type(self.value) in [float, int]:
+            return False
+        return self.value is None or self.value.strip() == ''
+
+    def save(self):
+        assert not self.is_blank()
+        session.merge(self)
 
 class DataSet(Base):
     __tablename__ = "dataset"
@@ -36,6 +46,9 @@ class DataSet(Base):
     last_updated = Column(String)
     last_scraped = Column(String)
     name = Column(String)
+    
+    def save(self):
+        session.merge(self)
 
 
 class Indicator(Base):
@@ -44,8 +57,13 @@ class Indicator(Base):
     name = Column(String)
     units = Column(String)
 
+    def save(self):
+        session.merge(self)
+
 Base.metadata.create_all(engine)
 
+def purge_blanks(values):
+    return [x for x in values if not x.is_blank]
 
 def send(klass, d, value_is_number=True):
     for item in d:
