@@ -83,7 +83,6 @@ def getcountry(threeletter="PAK"):
 
         indicator = {'indID':vdict['indID']}
         nameunits = re.search('(.*)\((.*)\)',vdict['indID'])
-        print nameunits
         if nameunits:
             (indicator['name'], indicator['units'])=nameunits.groups()
         else:

@@ -8,6 +8,7 @@ from orm import session, Value, DataSet, Indicator, send
 import orm
 import dl
 import re
+import lxml
 indicator_list = """
 SP.POP.TOTL
 ...
@@ -47,9 +48,15 @@ def getcountry(threeletter="PAK"):
     print header
     m_table.register_processor(headers_processor(header))
     table = xypath.Table.from_messy(m_table)
-    rows = table.filter(lambda b: b.raw.xpath('.//a'))
-    for x in rows:
-        print x.column
+    
+    def cell_links(b):
+        html = b.properties['html']
+        root = lxml.html.fromstring(html)
+        return root.xpath('.//a')
+
+    rows = table.filter(cell_links)
+    for row in rows:
+        print row.y
 
     for indicator in indicators:
         vdict = dict(value)
