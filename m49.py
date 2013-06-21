@@ -50,7 +50,7 @@ for messy in mt_prune:
     alpha_code_header = table.filter(contains_string("ISO ALPHA-3")).assert_one()
     country_header = table.filter(contains_string("or area name")).assert_one()
     num_code_header = table.filter(contains_string("Numerical")).assert_one()
-    countries = country_header.extend(y=1)
+    countries = country_header.fill(xypath.DOWN)
     num_code_header = countries.shift(x=-1)
     alpha_j = alpha_code_header.junction(countries)
     num_j = alpha_code_header.junction(num_code_header)
