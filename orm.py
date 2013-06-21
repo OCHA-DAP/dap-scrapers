@@ -32,6 +32,8 @@ class Value(Base):
     source = Column(String)
 
     def is_blank(self):
+        if type(self.value) in [float, int]:
+            return False
         return self.value is None or self.value.strip() == ''
 
     def save(self):

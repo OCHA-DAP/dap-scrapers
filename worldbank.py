@@ -8,6 +8,7 @@ import orm
 import dl
 import re
 indicator_list = """
+SP.POP.TOTL
 SP.POP.DPND.OL
 SP.POP.DPND.YG
 SH.DTH.IMRT
@@ -70,7 +71,7 @@ def getcountry(threeletter="PAK"):
 
     code = table.filter(equal_to('Indicator Code'))
 
-    years = code.extend(x=1)
+    years = code.fill(xypath.RIGHT)
     junction = indname.junction(years)
     for ind_cell, year_cell, value_cell in junction:
         vdict = dict(value)
@@ -90,6 +91,7 @@ def getcountry(threeletter="PAK"):
         if not v.is_blank: 
             v.save()
     session.commit()
+    print len(session.query(Value).filter(Value.dsID=='World Bank').all())
 
 for country in getcountrylist():
     getcountry(country)
