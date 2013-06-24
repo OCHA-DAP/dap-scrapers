@@ -9,6 +9,9 @@ import orm
 import dl
 import re
 import lxml
+import requests_cache
+
+requests_cache.install_cache("who_cache.db")
 
 """Value: dsID, region, indID, period, value, source, is_number
    DataSet: dsID, last_updated, last_scraped, name
@@ -34,7 +37,6 @@ def getcountrylist():
 def getcountry(threeletter="PAK"):
     print threeletter
     value = {'dsID':'who-athena',
-             'region':threeletter,
              'source':baseurl % threeletter,
              'is_number':True}
     
@@ -54,6 +56,7 @@ def getcountry(threeletter="PAK"):
                'period': table.filter("YEAR").x,
                'indID': table.filter("GHO").x,
                'region': table.filter("COUNTRY").x,
+               'x-supregion': table.filter("REGION").x,
               }
 
     def at_header(h):
@@ -70,17 +73,20 @@ def getcountry(threeletter="PAK"):
         for h in headers:
             vdict[h] = row.filter(at_header(h)).value
         vdict['value']=vdict['value'].partition('[')[0].strip()
+        if not vdict['region']:
+            print repr(vdict['region']), repr(vdict['x-supregion'])
+            vdict['region']=vdict['x-supregion']
+        del vdict['x-supregion']
 
         indicator = {'indID':vdict['indID'],
                      'units':None,
                      'name':vdict['indID']}
         Indicator(**indicator).save()
         v = Value(**vdict)
-        if not v.is_blank: 
+        if not v.is_blank(): 
             v.save()
         counter=counter+1
     print counter
     session.commit()
 
-for country in getcountrylist():
-    getcountry(country)
+getcountry("ALL")
