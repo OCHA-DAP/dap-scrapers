@@ -6,8 +6,8 @@ if cache:
     import requests_cache
     requests_cache.install_cache("cache")
 
-def grab(url, silence=[]):
-    r=requests.get(url)
+def grab(url, silence=[], **kwargs):
+    r=requests.get(url, **kwargs)
     try:
         r.raise_for_status()
     except requests.exceptions.HTTPError, e:
@@ -18,4 +18,3 @@ def grab(url, silence=[]):
         else:
             raise
     return StringIO.StringIO(r.content)
-
