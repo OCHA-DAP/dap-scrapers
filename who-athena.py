@@ -9,11 +9,6 @@ import orm
 import dl
 import re
 import lxml
-indicator_list = """
-SP.POP.TOTL
-...
-SI.POV.GINI""".strip().split('\n')
-
 
 """Value: dsID, region, indID, period, value, source, is_number
    DataSet: dsID, last_updated, last_scraped, name
@@ -30,6 +25,8 @@ dataset = {'dsID':'who-athena',
 
 DataSet(**dataset).save()    
 
+
+
 def getcountrylist():
     for value in session.query(Value).filter(Value.indID == "m49-name").all():
         yield value.region
@@ -41,12 +38,9 @@ def getcountry(threeletter="PAK"):
              'source':baseurl % threeletter,
              'is_number':True}
     
-    fh = dl.grab(baseurl%threeletter)
+    fh = dl.grab(baseurl%threeletter, timeout=20)
     messy = messytables.HTMLTableSet(fh)
     m_table = messy.tables[0]
-    offset, header = messytables.headers.headers_guess(m_table)
-    print header
-    m_table.register_processor(headers_processor(header))
     table = xypath.Table.from_messy(m_table)
     
     def cell_links(b):
@@ -54,29 +48,39 @@ def getcountry(threeletter="PAK"):
         root = lxml.html.fromstring(html)
         return root.xpath('.//a')
 
-    rows = table.filter(cell_links)
+    rows = table.rows() # table has no rows?
+    headers = {
+               'value': table.filter("DISPLAY VALUE").x,
+               'period': table.filter("YEAR").x,
+               'indID': table.filter("GHO").x,
+               'region': table.filter("COUNTRY").x,
+              }
+
+    def at_header(h):
+        return lambda b: b.x == headers[h]
+
+    print headers
+    counter = 0
     for row in rows:
-        print row.y
-
-    for indicator in indicators:
+        if row.filter(at_header('indID')).value=='GHO':
+            assert row.filter('GHO').y==0, row.filter('GHO').y
+            continue
+        
         vdict = dict(value)
-        vdict['indID'] = ind_cell.value
-        vdict['period'] = junction.value
-        vdict['value'] = value_cell.value
+        for h in headers:
+            vdict[h] = row.filter(at_header(h)).value
+        vdict['value']=vdict['value'].partition('[')[0].strip()
 
-        indicator = {'indID':vdict['indID']}
-        nameunits = re.search('(.*)\((.*)\)',vdict['indID'])
-        if nameunits:
-            (indicator['name'], indicator['units'])=nameunits.groups()
-        else:
-            indicator['name']=vdict['indID']
-            indicator['units']='uno'
+        indicator = {'indID':vdict['indID'],
+                     'units':None,
+                     'name':vdict['indID']}
         Indicator(**indicator).save()
         v = Value(**vdict)
         if not v.is_blank: 
             v.save()
+        counter=counter+1
+    print counter
     session.commit()
 
 for country in getcountrylist():
     getcountry(country)
-    exit()
