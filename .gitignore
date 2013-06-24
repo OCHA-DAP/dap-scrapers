@@ -1,0 +1,6 @@
+*.db
+*.bak
+*.sqlite
+*.pyc
+tool-update.log
+http/*
