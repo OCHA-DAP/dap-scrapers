@@ -56,12 +56,12 @@ def getcountrylist():
 
 def getcountry(threeletter="PAK"):
     print threeletter
+    baseurl = "http://api.worldbank.org/datafiles/%s_Country_MetaData_en_EXCEL.xls"
     value = {'dsID':'World Bank',
              'region':threeletter,
-             'source':'World Bank:' + threeletter,
+             'source':baseurl%threeletter,
              'is_number':True}
     
-    baseurl = "http://api.worldbank.org/datafiles/%s_Country_MetaData_en_EXCEL.xls"
     fh = dl.grab(baseurl%threeletter, [404])
     if not fh: return
     messy = messytables.excel.XLSTableSet(fh)
@@ -90,10 +90,10 @@ def getcountry(threeletter="PAK"):
             indicator['units']='uno'
         Indicator(**indicator).save()
         v = Value(**vdict)
-        if not v.is_blank: 
+        if not v.is_blank():
             v.save()
-    session.commit()
     print len(session.query(Value).filter(Value.dsID=='World Bank').all())
+    session.commit()
 
 for country in getcountrylist():
     getcountry(country)
