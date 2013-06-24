@@ -1,6 +1,8 @@
 *.db
+*.db-*
 *.bak
 *.sqlite
+*.sqlite-*
 *.pyc
 tool-update.log
 http/*
