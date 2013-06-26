@@ -184,16 +184,7 @@ def show_merged(m, threshold=1):
             for i in m[item]:
                 print i
 
-
-def demofile():
-    names = []
-    with open("../old-folder/full.csv", 'rb') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
-        for row in spamreader:
-            names.append(row[8])
-    return names
-
-def best_index(s, master=[]):
+def best_index(s, master=[], only_master=True):
     best = {}
     for row in s:
         master_match = [candidate for candidate in s[row] if candidate in master]
@@ -201,6 +192,8 @@ def best_index(s, master=[]):
         if master_match:
             match=master_match[0]
         else:
+            if only_master:
+                raise RuntimeError("No master match found for %r"%get_one(s[row]))
             match=get_one(s[row])
         for candidate in s[row]:
             best[candidate]=match
@@ -219,47 +212,10 @@ def best_index_wrapper(candidates, master):
     best = best_index(s, master)
     return best
 
-def initialise_company_names(candidates):
-    global company_index
-    master = open(COMPANY_LIST, 'r').read().split('\n')
-    company_index = best_index_wrapper(candidates, master)
-
 def companies_wrapper(candidates, master):
     "returns candidates, only deduped"
     best = best_index_wrapper(candidates, master)
     return [best[c] for c in candidates]
 
-def magic_ident(item, cat):
-    """
-    >>> magic_ident('xxboroughhospitalxx', 'nhs')
-    True
-    >>> magic_ident('xxboroughhospitalxx', 'ltd')
-    False
-    """
-    magic = {"nhs": ['pct','trust','hospital','nhs','foundation','hospice','sha','ambulance'],
-             "pub": ['borough','council','police','unitary'],
-             "ltd": ['ltd','limited','plc','llp','corporation'],
-             "odd": ['university','society','cic','royal','institut']
-            }
-    key = nopunct(purgebracket(lcase(ampersand(item))))
-    return any (i in key for i in magic[cat])
-
-def is_public_sector(item):
-    """
-    >>> is_public_sector('Basingstoke Council')
-    True
-    >>> is_public_sector('Council Limited')
-    False
-    >>> is_public_sector('Not Real')
-    False
-    """
-    if magic_ident(item, 'ltd'): return False
-    return any(magic_ident(item, sector) for sector in ['nhs', 'pub', 'odd'])
-
-
-if __name__=='__main__':
-    names = demofile()
-    master = open(COMPANY_LIST, 'r').read().split('\n')
-    print "%d rows"%len(names)
-    nice=companies_wrapper(names, master)
-
+with open("countries.txt") as f:
+    print apply(f.read().split('\n'))    
