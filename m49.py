@@ -45,6 +45,7 @@ mt = messytables.HTMLTableSet(fh)
 mt_prune = [x for x in mt.tables if json.loads(x.name).get('cellpadding')=="2"]
 assert len(mt_prune)==1
 
+gb=False
 for messy in mt_prune:
     table = xypath.Table.from_messy(messy)
     alpha_code_header = table.filter(contains_string("ISO ALPHA-3")).assert_one()
@@ -56,19 +57,23 @@ for messy in mt_prune:
     num_j = alpha_code_header.junction(num_code_header)
     alphas = [[x.value.strip() for x in row[1:]] for row in alpha_j]
     nums = [[x.value.strip() for x in row[1:]] for row in num_j]
+    # 729 - Sudan - SDN
+    alphas.extend([['Sudan','SDN']])
+    nums.extend([['729','SDN']])
     v_template = {'dsID':'m49',
                   'period': updated,
       	          'source': 'http://unstats.un.org/unsd/methods/m49/m49alpha.htm',
                   'is_number': False}
     builder = []
+    print alphas
     for entry in alphas:
         v=dict(v_template)
         v.update({'value':entry[0], 'region':entry[1], 'indID':'m49-name'})
         orm.session.merge(orm.Value(**v))
-        if 'GBR' in repr(v): print v
+        if 'GBR' in repr(v): gb=True
     for entry in nums:
         v=dict(v_template)
         v.update({'value':entry[0], 'region':entry[1], 'indID':'m49-num'})
         orm.session.merge(orm.Value(**v))
-        if 'GBR' in repr(v): print v
-    orm.session.commit()
+orm.session.commit()
+assert gb
