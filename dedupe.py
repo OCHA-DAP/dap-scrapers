@@ -1,14 +1,7 @@
 import collections
-import csv
 import re
 from collections import defaultdict, Counter
-import doctest
 
-from os.path import abspath, dirname, join
-COMPANY_LIST = abspath(join(dirname(__file__), '..', '..', 'fixtures',
-                       'emap_list.txt'))
-
-company_index={}
 def get_one(it):
     """return first item from iterator
     >>> get_one([1,2,3])
@@ -18,18 +11,6 @@ def get_one(it):
     """
     for i in it:
         return i
-
-def buildindex(s):
-    """make a lookup from original name to current key
-    >>> buildindex ({'key1': set(['a','b'])})
-    {'a': 'key1', 'b': 'key1'}
-    """
-    index={}
-    for row in s:
-        assert isinstance(s[row],set) or isinstance(s[row], frozenset)
-        for original in s[row]:
-            index[original] = row
-    return index
 
 def multi(function, s, verbose=False, diff=False, keychange=True, p=True):
     """This version differs in that it attempts to preserve the original names in a dictionary"""
@@ -133,6 +114,12 @@ def purge_s(i):
 def purge_space(i):
     return purgechars(i, ' ')
 
+def merge_space(i):
+    """
+    >>> merge_space(u"\xa0a \xa0b ")
+    u'a b'
+    """
+    return re.sub('\s+', ' ', i, flags=re.UNICODE).strip()
 
 def anagram(i):
     """
@@ -148,74 +135,13 @@ amperstand needs to be before purgewords (ENGL&), purgechars, anagram. Nice and 
 lcase is a requirement for purgewords, since those words are in lowercase
 purgebracket must be before nopunct, anagram"""
 
-functionlist = [identity, ampersand, lcase, purgewords, purgebracket, nopunct, purge_space, purge_s]#, anagram]
-difflist = [purgebracket]
-difflist=[]#functionlist
-keepkey = [anagram, purge_s]
+functionlist = [identity, ampersand, lcase, purgebracket, nopunct, merge_space]
+difflist=[]
+keepkey = []
 
-def apply(companies):
-    """
-    So long as it looks like this, ish, we're okay. Dictionary names and the order of everything
-    are up for grabs
-    >>> rval = apply(['cat', '*cat', 'dog', '*dog', 'wolf']) #doctest: +ELLIPSIS
-    >>> rval
-    {'wolf': frozenset(['wolf']), 'dog': frozenset(['*dog', 'dog']), 'cat': frozenset(['*cat', 'cat'])}
-    """
-    for f in functionlist:
-        companies = multi(f, companies, diff = f in difflist, keychange = not f in keepkey)
-    return companies
-
-def apply_one(name):
-    for f in functionlist:
+def apply_one(name, flist=None):
+    if not flist:
+        flist = functionlist
+    for f in flist:
         name = f(name)
     return name
-
-def merge(names):
-    out = collections.defaultdict(set)
-    for name in names:
-        out[apply_one(name)].add(name)
-    return out
-
-def show_merged(m, threshold=1):
-    "takes output from merge() - shows elided names!"
-    for item in sorted(m):
-        if len(m[item])>threshold:
-            print
-            for i in m[item]:
-                print i
-
-def best_index(s, master=[], only_master=True):
-    best = {}
-    for row in s:
-        master_match = [candidate for candidate in s[row] if candidate in master]
-        if not len(master_match) < 2: print "WARNING: ", master_match
-        if master_match:
-            match=master_match[0]
-        else:
-            if only_master:
-                raise RuntimeError("No master match found for %r"%get_one(s[row]))
-            match=get_one(s[row])
-        for candidate in s[row]:
-            best[candidate]=match
-    return best
-
-def best_index_wrapper(candidates, master):
-    """
-    returns dict of candidate: true name
-    >>> best_index_wrapper(["*cat", "cat", "*dog", "+dog"], ["dog", "wolf"])
-    None
-    """
-    all_companies = []
-    all_companies.extend(candidates)
-    all_companies.extend(master)
-    s = apply(all_companies)
-    best = best_index(s, master)
-    return best
-
-def companies_wrapper(candidates, master):
-    "returns candidates, only deduped"
-    best = best_index_wrapper(candidates, master)
-    return [best[c] for c in candidates]
-
-with open("countries.txt") as f:
-    print apply(f.read().split('\n'))    
