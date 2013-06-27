@@ -1,8 +1,13 @@
+import re
+import lxml.html
+import requests
 import xypath
+import StringIO
 import messytables
 #from hamcrest import equal_to, is_in
 from orm import session, Value, DataSet, Indicator, send
 import orm
+import dateutil.parser
 #import re
 indicator_list = """
 100106
@@ -33,37 +38,49 @@ def getindicator(ind="100106"):
              'is_number': True}
 
     dataset = {'dsID': 'HDRStats',
-               'last_updated': None,
                'last_scraped': orm.now(),
                'name': 'Human Development Indicators, UNDP'}
 
+    indicator = {'indID': "HDR:"+ind}
+
     send(DataSet, dataset)
-
-    messy = messytables.excel.XLSTableSet(open("pak.xls", "rb"))
+    html = requests.get(baseurl).content
+    htmlio = StringIO.StringIO(html)
+    messy = messytables.html.HTMLTableSet(htmlio)
     table = xypath.Table.from_messy(list(messy.tables)[0])
-    indicators = table.filter(is_in(indicator_list))
-    indname = indicators.shift(x=-1)
-    assert len(indname) == len(indicator_list)
+    root = lxml.html.fromstring(html)
 
-    code = table.filter(equal_to('Indicator Code'))
+    "get odd indicator / update time"
+    _, indicator_text = root.xpath("//h2/text()")
+    print indicator_text
+    try:
+        indicator_split, = re.findall("(.*)\(([^\(\)]+)\)", indicator_text)
+    except ValueError:
+        indicator_split = [indicator_text, ""]
+    indicator['name'], indicator['units'] = indicator_split
+    access_text, = [x.tail.strip() for x in root.xpath("//br") if str(x.tail) != "None" and x.tail.strip()]
+    access_date_raw, = re.findall('Accessed:(.*)from', access_text)
+    dataset['last_updated'] = dateutil.parser.parse(access_date_raw).isoformat()
+    print dataset['last_updated'], indicator['name'], "*", indicator['units']
+    send(Indicator, indicator)
 
-    years = code.extend(x=1)
-    for ind_cell, year_cell, value_cell in indname.junction(years):
-        vdict = dict(value)
-        vdict['indID'] = ind_cell.value
-        vdict['period'] = year_cell.value
-        vdict['value'] = value_cell.value
-
-        indicator = {'indID':vdict['indID']}
-        nameunits = re.search('(.*)\((.*)\)',vdict['indID'])
-        print nameunits
-        if nameunits:
-            (indicator['name'], indicator['units'])=nameunits.groups()
+    country_cell = table.filter("Country").assert_one()
+    years = country_cell.fill(xypath.RIGHT).filter(lambda b: b.value != '')
+    countries = country_cell.fill(xypath.DOWN)
+    for i in countries.junction(years):
+        newvalue = dict(value)
+        region_el=lxml.html.fromstring(i[0].properties['html'])
+        try:
+            link, = region_el.xpath('//a/@href')
+        except ValueError:  # non-countries don't have links.
+            newvalue['region'] = i[0].value.strip()
         else:
-            indicator['name']=vdict['indID']
-            indicator['units']='uno'
-        send(Indicator, indicator)
-        send(Value, vdict)
+            newvalue['region'], = re.findall("profiles/([^\.]*)\.html", link)
+        newvalue['value'] = i[2].value.strip()
+        newvalue['period'] =i[1].value.strip()
+        send(Value, newvalue)
     session.commit()
 
-getcountry()
+for ind in indicator_list:
+    print ind
+    getindicator(ind)
