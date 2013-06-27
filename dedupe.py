@@ -58,7 +58,7 @@ def nopunct(i):
     >>> nopunct("cat (not really)")
     'cat not really'
     """
-    return re.sub('[^\w ]','',i)
+    return re.sub('[^\w ]',' ',i,flags=re.UNICODE)
 
 def ampersand(i):
     """
