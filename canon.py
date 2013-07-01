@@ -8,6 +8,7 @@ db = dataset.connect('sqlite:///canon.db')
 region = db['region']
 
 def getpair(text):
+    """cheap and dirty CSV parsing"""
     chars = '\t|,'
     for char in chars:
         if char in text:
@@ -15,6 +16,7 @@ def getpair(text):
     raise RuntimeError, "getpair: found none of %r in %r."%(chars, text)
 
 def getcode(name):
+    """see if there's a matching row in the DB already, give answer"""
     if len(name)==3 and region.find_one(code=name.upper()):
        return name.upper()
     name = dedupe.apply_one(name)
@@ -24,6 +26,7 @@ def getcode(name):
     return newname
     
 def updatedb(m49=False):
+    """update db with data from a file in a CSV-like format"""
     for i, line in enumerate(fileinput.input()):
         left, right = getpair(line.decode('utf-8'))
         left = dedupe.apply_one(left)  # convert to a key
