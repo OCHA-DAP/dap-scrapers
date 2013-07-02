@@ -3,7 +3,7 @@
 import dataset
 import fileinput
 import dedupe
-
+import sys
 db = dataset.connect('sqlite:///canon.db')
 region = db['region']
 
@@ -38,4 +38,15 @@ def updatedb(m49=False):
                 continue
         region.upsert({'name':left, 'code':right}, ['name','code'])
 
-updatedb()
+#updatedb()
+
+if len(sys.argv) > 1:
+    m49 = "m49" in sys.argv[1]
+    print "parsing ", sys.argv[1:]
+    updatedb()
+else:
+    for i in open("who-nasty.out").read().split('\n'):
+        try:
+            getcode(i)
+    except Exception, e:
+        print e

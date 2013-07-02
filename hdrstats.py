@@ -78,7 +78,8 @@ def getindicator(ind="100106"):
             newvalue['region'], = re.findall("profiles/([^\.]*)\.html", link)
         newvalue['value'] = i[2].value.strip()
         newvalue['period'] =i[1].value.strip()
-        send(Value, newvalue)
+        if newvalue['value'].strip() != '..':
+            send(Value, newvalue)
     session.commit()
 
 for ind in indicator_list:
