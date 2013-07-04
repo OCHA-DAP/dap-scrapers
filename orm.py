@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 from sqlalchemy import event
 import datetime
-
+from canon import canonicalise
 def now():
     return datetime.datetime.now().isoformat()
 
@@ -37,6 +37,9 @@ class Value(Base):
         return self.value is None or self.value.strip() == ''
 
     def save(self):
+        self.region=canonicalise(self.region)
+        if self.region is None:
+            return
         assert not self.is_blank()
         session.merge(self)
 
