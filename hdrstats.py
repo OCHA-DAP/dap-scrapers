@@ -15,7 +15,6 @@ indicator_list = """
 68606
 89006
 101406
-98606
 98706
 57506
 38006
@@ -42,7 +41,10 @@ def getindicator(ind="100106"):
                'name': 'Human Development Indicators, UNDP'}
 
     indicator = {'indID': "HDR:"+ind}
-
+    hdi_indicator = {'indID': 'HDR:HDI Rank',
+                     'name': 'Human Development Index rank',
+                     'units': ''}
+    send(Indicator, hdi_indicator)
     send(DataSet, dataset)
     html = requests.get(baseurl).content
     htmlio = StringIO.StringIO(html)
@@ -67,21 +69,39 @@ def getindicator(ind="100106"):
     country_cell = table.filter("Country").assert_one()
     years = country_cell.fill(xypath.RIGHT).filter(lambda b: b.value != '')
     countries = country_cell.fill(xypath.DOWN)
+    hdi_rank = table.filter("HDI Rank").assert_one()
+    max_year = max(year.value for year in years)
+
+    for i in countries.junction(hdi_rank):
+        newvalue = dict(value)    
+        newvalue['indID'] = "HDR:HDI Rank"
+        newvalue['region'] = get_region(i[0])
+        newvalue['value'] = i[2].value.strip()
+        newvalue['period'] = 2012 # TODO Hard coded for now because year it pertains to is not clear 
+        if newvalue['value'].strip() != '..':
+            send(Value, newvalue)
+  
     for i in countries.junction(years):
         newvalue = dict(value)
-        region_el=lxml.html.fromstring(i[0].properties['html'])
-        try:
-            link, = region_el.xpath('//a/@href')
-        except ValueError:  # non-countries don't have links.
-            newvalue['region'] = i[0].value.strip()
-        else:
-            newvalue['region'], = re.findall("profiles/([^\.]*)\.html", link)
+        newvalue['region'] = get_region(i[0])
         newvalue['value'] = i[2].value.strip()
         newvalue['period'] =i[1].value.strip()
         if newvalue['value'].strip() != '..':
             send(Value, newvalue)
     session.commit()
 
+def get_region(country):
+        region_el=lxml.html.fromstring(country.properties['html'])
+        try:
+            link, = region_el.xpath('//a/@href')
+        except ValueError:  # non-countries don't have links.
+            niceregion = country.value.strip()
+        else:
+            niceregion, = re.findall("profiles/([^\.]*)\.html", link)
+        return niceregion
+
 for ind in indicator_list:
     print ind
     getindicator(ind)
+
+
