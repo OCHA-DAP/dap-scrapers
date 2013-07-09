@@ -5,12 +5,14 @@ import fileinput
 import dedupe
 import logging
 import sys
+import scrumble
 
 db = dataset.connect('sqlite:///canon.db')
 region = db['region']
 
 log = logging.getLogger("canon")
 log.addHandler(logging.StreamHandler())
+log.addHandler(logging.FileHandler("canon.log"))
 log.level = logging.WARN
 
 def getpair(text):
@@ -30,8 +32,17 @@ def canonicalise(name):
     if not newname:
         log.warn("Name %r not found."%name)
         return None
-    return newname
+    return newname.code
     
+
+def canon_number(f):
+    num = scrumble.as_float(f)
+    if not isinstance(num, float):
+        log.warn("Unable to transmute %r to float"%f)
+        return None
+    return num
+
+
 def updatedb(m49=False):
     """update db with data from a file in a CSV-like format"""
     for i, line in enumerate(fileinput.input()):

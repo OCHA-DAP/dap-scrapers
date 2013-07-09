@@ -5,7 +5,7 @@ import xypath
 import StringIO
 import messytables
 #from hamcrest import equal_to, is_in
-from orm import session, Value, DataSet, Indicator, send
+from orm import session, Value, DataSet, Indicator
 import orm
 import dateutil.parser
 #import re
@@ -44,8 +44,8 @@ def getindicator(ind="100106"):
     hdi_indicator = {'indID': 'HDR:HDI Rank',
                      'name': 'Human Development Index rank',
                      'units': ''}
-    send(Indicator, hdi_indicator)
-    send(DataSet, dataset)
+    Indicator(**hdi_indicator).save()
+    DataSet(**dataset).save()
     html = requests.get(baseurl).content
     htmlio = StringIO.StringIO(html)
     messy = messytables.html.HTMLTableSet(htmlio)
@@ -64,7 +64,7 @@ def getindicator(ind="100106"):
     access_date_raw, = re.findall('Accessed:(.*)from', access_text)
     dataset['last_updated'] = dateutil.parser.parse(access_date_raw).isoformat()
     print dataset['last_updated'], indicator['name'], "*", indicator['units']
-    send(Indicator, indicator)
+    Indicator(**indicator).save()
 
     country_cell = table.filter("Country").assert_one()
     years = country_cell.fill(xypath.RIGHT).filter(lambda b: b.value != '')
@@ -79,7 +79,7 @@ def getindicator(ind="100106"):
         newvalue['value'] = i[2].value.strip()
         newvalue['period'] = 2012 # TODO Hard coded for now because year it pertains to is not clear 
         if newvalue['value'].strip() != '..':
-            send(Value, newvalue)
+            Value(**newvalue).save()
   
     for i in countries.junction(years):
         newvalue = dict(value)
@@ -87,7 +87,7 @@ def getindicator(ind="100106"):
         newvalue['value'] = i[2].value.strip()
         newvalue['period'] =i[1].value.strip()
         if newvalue['value'].strip() != '..':
-            send(Value, newvalue)
+            Value(**newvalue).save()
     session.commit()
 
 def get_region(country):

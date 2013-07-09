@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 from sqlalchemy import event
 import datetime
-from canon import canonicalise
+from canon import canonicalise, canon_number
 def now():
     return datetime.datetime.now().isoformat()
 
@@ -40,8 +40,16 @@ class Value(Base):
         self.region=canonicalise(self.region)
         if self.region is None:
             return
+        if self.is_number:
+            self.value = canon_number(self.value)
+            if self.value is None:
+                return
         assert not self.is_blank()
-        session.merge(self)
+        try:
+            session.merge(self)
+        except:
+            print self.__dict__
+            raise
 
 class DataSet(Base):
     __tablename__ = "dataset"
