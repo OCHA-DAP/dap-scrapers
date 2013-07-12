@@ -24,7 +24,7 @@ def doit(url, targets, names, num_years=10):
     target_cells = table.filter(lambda b: b.value in targets)
 
     value = {'dsID': 'emdat',
-             'period': "%sT%sY"%(minyear, num_years),
+             'period': "%s/P%sY"%(minyear, num_years),
              'source': url,
              'is_number': True}
 

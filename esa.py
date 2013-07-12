@@ -61,7 +61,7 @@ for sheet in spreadsheets:
             year1, _, year2 = year_value.partition('-')
             year_count = int(year2)-int(year1)
             assert year_count == 5
-            year_value = "%sP%dY"%(year1, year_count)
+            year_value = "%s/P%dY"%(year1, year_count)
         value['period']=year_value
         value['value']=value_cell.value
         orm.Value(**value).save()
