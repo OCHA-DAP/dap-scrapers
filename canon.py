@@ -37,6 +37,8 @@ def canonicalise(name):
 
 def canon_number(f):
     num = scrumble.as_float(f)
+    if not num:
+        return None
     if not isinstance(num, float):
         log.warn("Unable to transmute %r to float"%f)
         return None
@@ -58,7 +60,8 @@ def updatedb(m49=False):
         if right is not None:
             region.upsert({'name':left, 'code':right}, ['name','code'])
 
-#updatedb()
+if __name__=="__main__":
+    updatedb()
 
 def _ignore():
     if len(sys.argv) > 1:
