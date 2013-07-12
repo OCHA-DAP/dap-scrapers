@@ -6,6 +6,8 @@ from sqlalchemy.engine import Engine
 from sqlalchemy import event
 import datetime
 from canon import canonicalise, canon_number
+import atexit
+
 def now():
     return datetime.datetime.now().isoformat()
 
@@ -83,3 +85,7 @@ def send(klass, d, value_is_number=True):
         except:
             pass
     return session.merge(klass(**d))
+
+@atexit.register
+def exithandler():
+    session.commit()
