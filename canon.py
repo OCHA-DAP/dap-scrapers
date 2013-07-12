@@ -42,6 +42,11 @@ def canon_number(f):
         return None
     return num
 
+def canon_period(p):
+    if isinstance(p, basestring):
+        return p
+    assert int(p) == float(p)
+    return str(int(p))
 
 def updatedb(m49=False):
     """update db with data from a file in a CSV-like format"""

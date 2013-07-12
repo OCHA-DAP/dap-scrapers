@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 from sqlalchemy import event
 import datetime
-from canon import canonicalise, canon_number
+from canon import canonicalise, canon_number, canon_period
 import atexit
 
 def now():
@@ -40,6 +40,7 @@ class Value(Base):
 
     def save(self):
         self.region=canonicalise(self.region)
+        self.period=canon_period(self.period)
         if self.region is None:
             return
         if self.is_number:
