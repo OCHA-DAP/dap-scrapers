@@ -1,3 +1,4 @@
+import logging
 import dl
 import messytables
 import xypath
@@ -10,6 +11,11 @@ import lxml.html
    DataSet: dsID, last_updated, last_scraped, name
    Indicator: indID, name, units
    """
+
+log = logging.getLogger("unicef")
+log.addHandler(logging.StreamHandler())
+log.addHandler(logging.FileHandler("unicef.log"))
+log.level = logging.WARN
 
 dataset = { "dsID": "unicef-infobycountry",
             "last_updated": None,
@@ -89,7 +95,11 @@ def countrylist():
         html = requests.get(url).content
         root = lxml.html.fromstring(html)
         root.make_links_absolute(baseurl)
-        link, = root.xpath('//a[normalize-space(text())="Statistics"]/@href')
+        try:
+            link, = root.xpath('//a[normalize-space(text())="Statistics"]/@href')
+        except:
+            log.warn("No stats found for %r"%url)
+            continue
         
         yield link, country.text_content()
         
