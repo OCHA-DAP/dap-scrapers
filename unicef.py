@@ -3,6 +3,8 @@ import messytables
 import xypath
 import re
 import orm
+import requests
+import lxml.html
 
 """Value: dsID, region, indID, period, value, source, is_number
    DataSet: dsID, last_updated, last_scraped, name
@@ -34,7 +36,11 @@ def split_ind(indtext):
     3) rest as ind name
     """
     indtext=indtext.replace("*","")
-    start, y1, y2, end = re.search("(.*?)(\d\d\d\d)-?(\d\d\d\d)?(.*)", indtext).groups()
+    try:
+        start, y1, y2, end = re.search("(.*?)(\d\d\d\d)-?(\d\d\d\d)?(.*)", indtext).groups()
+    except:
+        print "Couldn't parse %r"% indtext
+        return {'indID': indtext, 'period':'', 'units':''}
     if y2:
         period = '/'.join((y1,y2))
     else:
@@ -59,12 +65,37 @@ def getstats(url, country="PLACEHOLDER"):
         inds=table.filter(lambda b: b.x==0)
         for ind in inds:
             values_tosave = dict(value_template)
+            values_tosave['source'] = url
             values_tosave['region'] = country
-            values_tosave['value'] = value.value
-            value=ind.shift(xypath.RIGHT)
-            print ind.value, "***", value.value
-           
+            values_tosave['value'] = ind.shift(xypath.RIGHT).value
+            if "to the top" not in values_tosave['value']:
+                split = split_ind(ind.value)
+                indicator = {'indID': split['indID'], 'name': split['indID'], 'units': split['units']}
+                orm.Indicator(**indicator).save()
+                values_tosave['indID']= split['indID']
+                orm.Value(**values_tosave).save()
 
+   
+def countrylist():
+    baseurl = 'http://www.unicef.org/infobycountry'
+    html = requests.get(baseurl).content
+    root = lxml.html.fromstring(html)
+    root.make_links_absolute(baseurl)
+    mostcountries = root.xpath("//div[@class='contentrow' or @class='contentrow_last']//a")
+    for country in mostcountries:
+        url = country.attrib['href']
+        if 'bvi.html' in country:
+            continue
+        html = requests.get(url).content
+        root = lxml.html.fromstring(html)
+        root.make_links_absolute(baseurl)
+        link, = root.xpath('//a[normalize-space(text())="Statistics"]/@href')
+        
+        yield link, country.text_content()
+        
 if __name__=="__main__":
-    getstats("http://www.unicef.org/infobycountry/benin_statistics.html")
+    orm.DataSet(**dataset).save()
+    for link, country in countrylist():
+        print link, country
+        getstats(link, country)
 

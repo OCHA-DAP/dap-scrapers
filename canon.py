@@ -45,6 +45,7 @@ def canon_number(f):
     return num
 
 def canon_period(p):
+    if p is None: return ''
     if isinstance(p, basestring):
         return p
     assert int(p) == float(p)
