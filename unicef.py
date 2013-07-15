@@ -66,20 +66,28 @@ def split_ind(indtext):
 def getstats(url, country="PLACEHOLDER"):
     handle = dl.grab(url)
     mts = messytables.any.any_tableset(handle)
+    saves = 0
     for mt in mts.tables:
         table = xypath.Table.from_messy(mt)
-        inds=table.filter(lambda b: b.x==0)
+        inds = table.filter(lambda b: b.x==0 and "EPI" in b.value)
+        if not inds: 
+            continue
+        assert len(inds)==1
+        top, = table.filter(lambda b: 'to the top' in b.value)
+        value, = inds.junction(top)
         for ind in inds:
+            split = split_ind(ind.value)
             values_tosave = dict(value_template)
             values_tosave['source'] = url
             values_tosave['region'] = country
-            values_tosave['value'] = ind.shift(xypath.RIGHT).value
-            if "to the top" not in values_tosave['value']:
-                split = split_ind(ind.value)
-                indicator = {'indID': split['indID'], 'name': split['indID'], 'units': split['units']}
-                orm.Indicator(**indicator).save()
-                values_tosave['indID']= split['indID']
-                orm.Value(**values_tosave).save()
+            values_tosave['value'] = value[2].value
+            indicator = {'indID': split['indID'], 'name': split['indID'], 'units': split['units']}
+            orm.Indicator(**indicator).save()
+            values_tosave['indID']= split['indID']
+            orm.Value(**values_tosave).save()
+            saves = saves + 1
+    if saves != 1:
+        print "huh, %d saves for %r"%(saves, url)
 
    
 def countrylist():
