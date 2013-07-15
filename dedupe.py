@@ -56,7 +56,7 @@ def purgebracket(i):
 def nopunct(i):
     """
     >>> nopunct("cat (not really)")
-    'cat not really'
+    'cat  not really '
     """
     return re.sub('[^\w ]',' ',i,flags=re.UNICODE)
 
@@ -87,6 +87,15 @@ def purgewords(i):
         while p in words:
                 words.remove(p)
     return ' '.join(words)
+
+def purge_prefix_zero(i):
+    """
+    >>> purge_prefix_zero("007")
+    '7'
+    >>> purge_prefix_zero("0800")
+    '800'
+    """
+    return re.sub('^0*','', i.strip())
 
 def sorted_words(i):
     """
@@ -135,7 +144,7 @@ amperstand needs to be before purgewords (ENGL&), purgechars, anagram. Nice and 
 lcase is a requirement for purgewords, since those words are in lowercase
 purgebracket must be before nopunct, anagram"""
 
-functionlist = [identity, ampersand, lcase, purgebracket, nopunct, merge_space]
+functionlist = [identity, ampersand, lcase, purgebracket, nopunct, merge_space, purge_prefix_zero]
 difflist=[]
 keepkey = []
 
