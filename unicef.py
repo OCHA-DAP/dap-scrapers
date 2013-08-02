@@ -114,6 +114,6 @@ def countrylist():
 if __name__=="__main__":
     orm.DataSet(**dataset).save()
     for link, country in countrylist():
-        print link, country
+        print repr([link, country])
         getstats(link, country)
 

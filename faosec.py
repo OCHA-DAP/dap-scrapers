@@ -28,7 +28,7 @@ orm.Indicator(**indicator).save()
 
 
 def niceyear(s):
-    return s.partition("-")[0]+"P3Y"
+    return s.partition("-")[0]+"/P3Y"
 
 def do_file(url="http://bit.ly/14FRxGV"):
     fh = dl.grab(url)

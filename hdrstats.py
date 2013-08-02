@@ -40,8 +40,8 @@ def disasters():
 
 def getindicator(ind="100106", overridefunction=None):
     if not overridefunction:
-        html = requests.get(baseurl).content
         baseurl = 'http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=%s&lang=en' % ind
+        html = requests.get(baseurl).content
     else:
         html, baseurl = overridefunction()
     value = {'dsID': 'HDRStats',
@@ -65,7 +65,7 @@ def getindicator(ind="100106", overridefunction=None):
     root = lxml.html.fromstring(html)
 
     "get odd indicator / update time"
-    _, indicator_text = root.xpath("//h2/text()")
+    indicator_text = root.xpath("//h2/text()")[-1]
     print indicator_text
     try:
         indicator_split, = re.findall("(.*)\(([^\(\)]+)\)", indicator_text)

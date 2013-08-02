@@ -38,7 +38,8 @@ for sheet in spreadsheets:
                 }
     orm.Indicator(**indicator).save()
     value_template = {"dsID": dsID,
-                      "is_number": True,}
+                      "is_number": True,
+                      "source": sheet}
    
     raw = dl.grab(sheet)
     mtables = messytables.any.any_tableset(raw)
