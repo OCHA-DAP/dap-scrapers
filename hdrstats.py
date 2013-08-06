@@ -113,8 +113,8 @@ def get_region(country):
             niceregion, = re.findall("profiles/([^\.]*)\.html", link)
         return niceregion
 
-getindicator("98606", disasters)
-exit()
+#getindicator("98606", disasters)
+#exit()
 for ind in indicator_list:
     print ind
     getindicator(ind)
