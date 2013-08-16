@@ -23,20 +23,23 @@ def getpair(text):
             return [x.strip() for x in text.split(char)]
     raise RuntimeError, "getpair: found none of %r in %r."%(chars, text)
 
-def canonicalise(name):
+def canonicalise(rawname):
     """see if there's a matching row in the DB already, give answer"""
-    if len(name)==3 and region.find_one(code=name.upper()):
-       return name.upper()
-    name = dedupe.apply_one(name)
-    newname = region.find_one(name=name)
-    if not newname:
-        log.warn("Name %r not found."%name)
-        return None
-    return newname.code
+    if len(rawname)==3 and region.find_one(code=rawname.upper()):
+       return rawname.upper()
+    name = dedupe.apply_one(rawname)
+    nicename = region.find_one(name=name)
+    if not nicename:
+        name = dedupe.apply_one_keep_bracket(rawname)
+        nicename = region.find_one(name=name)
+        if not nicename:
+            log.warn("Name %r (%r) not found."%(rawname, name))
+            return None
+    return nicename.code
     
 
 def canon_number(f):
-    num = scrumble.as_float(f)
+    num = scrumble.as_float(f, strict=True)
     if not num:
         return None
     if not isinstance(num, float):

@@ -145,8 +145,12 @@ lcase is a requirement for purgewords, since those words are in lowercase
 purgebracket must be before nopunct, anagram"""
 
 functionlist = [identity, ampersand, lcase, purgebracket, nopunct, merge_space, purge_prefix_zero]
+shortlist = [identity, ampersand, lcase, nopunct, merge_space, purge_prefix_zero]
 difflist=[]
 keepkey = []
+
+def apply_one_keep_bracket(name):
+    return apply_one(name, flist=shortlist)
 
 def apply_one(name, flist=None):
     if not flist:
