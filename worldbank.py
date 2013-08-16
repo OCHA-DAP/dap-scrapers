@@ -34,7 +34,9 @@ IT.CEL.SETS.P2
 IT.NET.USER.P2
 NE.CON.PRVT.PP.KD
 EG.ELC.ACCS.ZS
-SI.POV.GINI""".strip().split('\n')
+SI.POV.GINI
+FP.CPI.TOTL.ZG
+""".strip().split('\n')
 
 
 """Value: dsID, region, indID, period, value, source, is_number
