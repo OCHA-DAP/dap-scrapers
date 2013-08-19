@@ -20,6 +20,7 @@ indicators = ["566",  # population undernourished, percentage
               "755",  # }
               "756",  # } telecoms x3
               "605",  # }
+              "640",  # energy consumption
              ]
 
 dataset = {"dsID": "mdgs",
