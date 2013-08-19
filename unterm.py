@@ -43,6 +43,7 @@ Sort:1'''
 
 indicators = {"Date of Entry into UN": xypath.RIGHT,
               "ISO Country alpha-3-code": xypath.RIGHT,
+              "ISO Country alpha-2-code": xypath.RIGHT,
               "ISO Currency Code": xypath.RIGHT,
               "Short Name": xypath.RIGHT,
               "Formal Name": xypath.RIGHT,
