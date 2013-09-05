@@ -69,10 +69,11 @@ for country in headinglist:
     matches = [best_match(header, headinglist[country]) for header in headers]
     d_matches = dict(zip(headers, matches))
     for head in d_matches:
-        value = dict(value_template)
-        value['region'] = country
-        value['indID'] = "wikipedia:"+head
-        value['source'] = wikibase % (country, d_matches[head])
-        value['value'] = value['source']
-        print value
-        orm.Value(**value).save()
+        if d_matches[head]:
+            value = dict(value_template)
+            value['region'] = country
+            value['indID'] = "wikipedia:"+head
+            value['source'] = wikibase % (country, d_matches[head])
+            value['value'] = value['source']
+            print value
+            orm.Value(**value).save()
