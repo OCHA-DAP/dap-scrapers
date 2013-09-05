@@ -1,0 +1,7 @@
+-e git+https://github.com/scraperwiki/messytables#egg=messytables
+-e git+https://github.com/scraperwiki/scrumble#egg=scrumble
+-e git+https://github.com/scraperwiki/xypath#egg=xypath
+-e git+https://github.com/pudo/dataset#egg=dataset
+requests
+pyhamcrest
+sqlalchemy

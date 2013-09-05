@@ -2,7 +2,7 @@ import codecs
 import sys
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
 
-from get_headings import headings
+from wikihead import headings
 headers = u"""
 Geography
 Climate
