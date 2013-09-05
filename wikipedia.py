@@ -71,8 +71,8 @@ for country in headinglist:
     for head in d_matches:
         value = dict(value_template)
         value['region'] = country
-        value['indID'] = head
-        value['source'] = wikibase % (country, head)
+        value['indID'] = "wikipedia:"+head
+        value['source'] = wikibase % (country, d_matches[head])
         value['value'] = value['source']
         print value
         orm.Value(**value).save()
