@@ -4,7 +4,7 @@ import xypath
 import messytables
 from messytables import headers_processor
 from hamcrest import equal_to, is_in
-from orm import session, Value, DataSet, Indicator, send
+from orm import session, Value, DataSet, Indicator
 import orm
 import dl
 import re

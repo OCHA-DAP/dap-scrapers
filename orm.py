@@ -76,17 +76,6 @@ class Indicator(Base):
 
 Base.metadata.create_all(engine)
 
-def purge_blanks(values):
-    return [x for x in values if not x.is_blank]
-
-def send(klass, d, value_is_number=True):
-    for item in d:
-        try:
-            d[item] = d[item].strip()
-        except:
-            pass
-    return session.merge(klass(**d))
-
 @atexit.register
 def exithandler():
     session.commit()

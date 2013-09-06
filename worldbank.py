@@ -3,7 +3,7 @@ import requests
 import xypath
 import messytables
 from hamcrest import equal_to, is_in
-from orm import session, Value, DataSet, Indicator, send
+from orm import session, Value, DataSet, Indicator
 import orm
 import datetime
 import re
