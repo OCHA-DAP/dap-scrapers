@@ -43,7 +43,7 @@ orm.DataSet(**dataset).save()
 for x in indicators: orm.Indicator(**x).save()
 
 mt = messytables.HTMLTableSet(fh)
-mt_prune = [x for x in mt.tables if json.loads(x.name).get('cellpadding')=="2"]
+mt_prune = [x for x in mt.tables if len(list(x)) > 200]
 assert len(mt_prune)==1
 
 gb=False
