@@ -3,5 +3,6 @@
 -e git+https://github.com/scraperwiki/xypath#egg=xypath
 -e git+https://github.com/pudo/dataset#egg=dataset
 requests
+requests_cache
 pyhamcrest
 sqlalchemy
