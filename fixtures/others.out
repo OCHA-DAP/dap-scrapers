@@ -10,11 +10,13 @@ gambia|GMB
 guinea bisau|GNB
 hong kong sar china|HKG
 hong kong china|HKG
+china hong kong sar|HKG
 korea dem rep|PRK
 korea rep|KOR
 kyrgyz republic|KGZ
 lao pdr|LAO
 macao sar china|MAC
+china macao sar|MAC
 micronesia fed sts|FSM
 micronesia federated states of|FSM
 moldova|MDA
@@ -32,6 +34,7 @@ são tomé and principe|STP
 yemen rep|YEM
 korea republic of|KOR
 korea democratic people s republic of|PRK
+demo people s republic of korea|PRK
 cote d ivoire|CIV
 libyan arab jamahiriya|LBY
 cte d ivoire|CIV
@@ -40,3 +43,12 @@ occupied palestinian territory|PSE
 occupied palestinian territories|PSE
 palestine state of|PSE
 korea democratic people s rep of|PRK
+tfyr macedonia|MKD
+macedonia fyr|MKD
+macedonia the former yugoslav republic of|MKD
+falkland is malvinas|FLK
+tanzania united republic of|TZA
+iran islamic republic of|IRN
+gambia the|GMB
+egypt arab rep|EGY
+virgin islands u s|VIR
