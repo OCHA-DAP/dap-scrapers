@@ -3,6 +3,8 @@ ivory coast|CIV
 united kingdom|GBR
 bahamas the|BHS
 congo dem rep|COD
+congo democratic republic of the|COD
+congo republic of the|COG
 congo rep|COG
 republic of congo|COG
 eygpt arab rep|EGY
@@ -12,9 +14,13 @@ hong kong sar china|HKG
 hong kong china|HKG
 china hong kong sar|HKG
 korea dem rep|PRK
+korea north|PRK
 korea rep|KOR
+korea south|KOR
 kyrgyz republic|KGZ
 lao pdr|LAO
+laos|LAO
+east timor|TLS
 macao sar china|MAC
 china macao sar|MAC
 micronesia fed sts|FSM
@@ -31,6 +37,7 @@ venezuela rb|VEN
 vietnam|VNM
 iran islamic rep|IRN
 são tomé and principe|STP
+são tomé and príncipe|STP
 yemen rep|YEM
 korea republic of|KOR
 korea democratic people s republic of|PRK
@@ -41,6 +48,7 @@ cte d ivoire|CIV
 ethiopia pdr|ETH
 occupied palestinian territory|PSE
 occupied palestinian territories|PSE
+palestine|PSE
 palestine state of|PSE
 korea democratic people s rep of|PRK
 tfyr macedonia|MKD
@@ -52,3 +60,8 @@ iran islamic republic of|IRN
 gambia the|GMB
 egypt arab rep|EGY
 virgin islands u s|VIR
+vatican city|VAT
+russia|RUS
+brunei|BRN
+syria|SYR
+burma|MMR
