@@ -18,7 +18,7 @@ col5:Ru
 col2:Ch
 %%Surrogate_col1:1
 col1:Ar
-Query:  
+Query:
 FTSearch:
 %%Surrogate_Sub:1
 Sub:country name
@@ -59,7 +59,9 @@ dataset_data = {'dsID': 'unterm',
 DataSet(**dataset_data).save()
 
 
-indicator_data =  [{'indID':'unterm:'+i, 'name':i, 'units':''} for i in indicators]
+indicator_data = [{'indID': 'unterm:' + i,
+                   'name': i,
+                   'units': ''} for i in indicators]
 for db_row in indicator_data:
     Indicator(**db_row).save()
 
@@ -68,7 +70,7 @@ for db_row in indicator_data:
    Indicator: indID, name, units
    """
 
-value_static= {'dsID': 'unterm', 'period': '', 'is_number':False}
+value_static = {'dsID': 'unterm', 'period': '', 'is_number': False}
 
 
 def country_urls():
@@ -83,22 +85,21 @@ for country in country_urls():
     print country
     html = requests.get(country).content
     root = lxml.html.fromstring(html)
-    # eng_tables = root.xpath('//table[preceding::font/text()="English" and following::font/text()="French"]')
     eng_tables = root.xpath('//table[following::font/text()="French"]')
     eng_text = ''.join(lxml.html.tostring(table) for table in eng_tables)
-    data={}
+    data = {}
     for m_table in messytables.any.any_tableset(StringIO.StringIO(eng_text)).tables:
         table = xypath.Table.from_messy(m_table)
         for ind in indicators:
             target = table.filter(ind)
             if target:
-                data[ind]=target.shift(indicators[ind]).value.strip()
+                data[ind] = target.shift(indicators[ind]).value.strip()
     for item in data:
         value_data = dict(value_static)
-        value_data['indID']='unterm:'+item
-        value_data['value']=data[item]
-        value_data['region']=data['ISO Country alpha-3-code']
-        value_data['source']=country
+        value_data['indID'] = 'unterm:' + item
+        value_data['value'] = data[item]
+        value_data['region'] = data['ISO Country alpha-3-code']
+        value_data['source'] = country
         if value_data['value']:
             Value(**value_data).save()
     assert len(data) == len(indicators)

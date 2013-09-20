@@ -31,6 +31,7 @@ dataset = {"dsID": "mdgs",
 value_template = {"dsID": "mdgs",
                   "is_number": True}
 
+
 def do_indicator(ind="566"):
     baseurl="http://mdgs.un.org/unsd/mdg/Handlers/ExportHandler.ashx?Type=Csv&Series=%s"
     url = baseurl % ind
@@ -48,7 +49,7 @@ def do_indicator(ind="566"):
     else:
         i_name = indicator
         i_unit = ''
-    value_template['indID']=indicator
+    value_template['indID'] = indicator
     indicator = {'indID': indicator,
                  'name': i_name,
                  'units': i_unit}
@@ -56,13 +57,13 @@ def do_indicator(ind="566"):
     # countries also gets some rubbish, but junction will ignore it.
     for c_cell, y_cell, v_cell in countries.junction(years):
         value = dict(value_template)
-        value['region']=c_cell.value
-        value['period']=y_cell.value
-        value['value']=v_cell.value
+        value['region'] = c_cell.value
+        value['period'] = y_cell.value
+        value['value'] = v_cell.value
         orm.Value(**value).save()
 
 
 orm.DataSet(**dataset).save()
 for ind in indicators:
     do_indicator(ind)
-orm.session.commit()    
+orm.session.commit()

@@ -26,12 +26,12 @@ value_template = {"dsID": "worldaerodata",
                   "source": "http://worldaerodata.com/countries/",
                   "is_number": True}
 
+
 def do_airports(baseurl):
     html = requests.get(baseurl).content
     root = lxml.html.fromstring(html)
     root.make_links_absolute(baseurl)
     country_links = root.xpath("//li/a")
-    
 
     for country in country_links:
         country_name = country.text
@@ -40,16 +40,16 @@ def do_airports(baseurl):
         country_root = lxml.html.fromstring(country_html)
         airports = len(country_root.xpath("//table//table//a"))
         yield country_name, airports
-        
+
 world_url = "http://worldaerodata.com/countries/"
 world = dict(do_airports(world_url))
 del world['United States']
 us_url = "http://worldaerodata.com/US/"
 us = list(do_airports(us_url))
-world ['United States'] = sum([x[1] for x in us])
+world['United States'] = sum([x[1] for x in us])
 
 for country in world:
     value = dict(value_template)
     value['region'] = country
     value['value'] = world[country]
-    orm.Value(**value).save() 
+    orm.Value(**value).save()

@@ -31,6 +31,7 @@ def get_zip_urls(basename="http://faostat.fao.org/Portals/_Faostat/Downloads/zip
     ajax = requests.get(jsonurl).json()
     return [basename % i[2] for i in ajax if '+' not in i[3]]
 
+
 def do_zip(url):
     print url
     fh = dl.grab(url)
@@ -39,12 +40,12 @@ def do_zip(url):
     xy = xypath.Table.from_messy(mt)
     mt = None
     print "...got"
-    headers = xy.filter(lambda c: c.y==0)
+    headers = xy.filter(lambda c: c.y == 0)
     country = headers.filter("Country").assert_one()
     items = headers.filter("Item").assert_one().fill(xypath.DOWN).filter("Grand Total + (Total)")
     elements = headers.filter("Element").assert_one().fill(xypath.DOWN).filter("Food supply (kcal/capita/day)")
-    filtered_items = items.select_other(lambda a,b: a.y==b.y, elements)
-    
+    filtered_items = items.select_other(lambda a, b: a.y == b.y, elements)
+
     years = country.fill(xypath.RIGHT).filter(re.compile("Y\d\d\d\d$"))
 
     for i in filtered_items:
@@ -54,11 +55,10 @@ def do_zip(url):
         values['region'] = countrycodecell[2].value
         year_junction = i.junction(years)
         for _, period, value in year_junction:
-            values['period'] = period.value.replace("Y","")
+            values['period'] = period.value.replace("Y", "")
             values['value'] = value.value
             orm.Value(**values).save()
-    orm.session.commit()  
-    
+    orm.session.commit()
 
 for i in get_zip_urls():
     do_zip(i)

@@ -1,14 +1,9 @@
-import StringIO
-import requests
 import xypath
 import messytables
-from messytables import headers_processor
-from hamcrest import equal_to, is_in
 from orm import session, Value, DataSet, Indicator
 import orm
 import dl
 import re
-import lxml
 import requests_cache
 
 requests_cache.install_cache("who_cache.db")
@@ -22,23 +17,24 @@ secondurl = "http://apps.who.int/gho/athena/data/data-verbose.csv?target=GHO/CM_
 
 thirdurl = "http://apps.who.int/gho/athena/data/data-verbose.csv?target=GHO/WHS9_86,WHS9_88,WHS9_89,WHS9_92,WHS9_96,WHS9_97,WHS9_90&profile=verbose&filter=COUNTRY:*;YEAR:2012;YEAR:2011;YEAR:2010;YEAR:2009;YEAR:2008;YEAR:2007"
 
-dataset = {'dsID':'who-athena-other',
-           'last_updated':None,
-           'last_scraped':orm.now(),
+dataset = {'dsID': 'who-athena-other',
+           'last_updated': None,
+           'last_scraped': orm.now(),
            'name': 'World Health Organization - Athena'}
 
-DataSet(**dataset).save()    
+DataSet(**dataset).save()
+
 
 def geturl(url):
-    value = {'dsID':'who-athena-other',
-             'source':url,
-             'is_number':True}
-    
+    value = {'dsID': 'who-athena-other',
+             'source': url,
+             'is_number': True}
+
     fh = dl.grab(url, timeout=20)
     messy, = messytables.any.any_tableset(fh).tables
     table = xypath.Table.from_messy(messy)
-    
-    rows = table.rows() # table has no rows?
+
+    rows = table.rows()  # table has no rows?
     headers = {
                'value': table.filter("Display Value").x,
                'period': table.filter("YEAR (DISPLAY)").x,
@@ -52,34 +48,34 @@ def geturl(url):
 
     def units(s):
         print repr(s)
-        z = re.findall("(.*)\(([^)]*)\)$",s)
+        z = re.findall("(.*)\(([^)]*)\)$", s)
         if z:
-            assert len(z)==1
+            assert len(z) == 1
             return z[0]
         else:
-            return (s,"")
+            return (s, "")
 
     print headers
     counter = 0
     for row in rows:
-        if row.filter(at_header('indID')).value=='GHO':
-            assert row.filter('GHO').y==0, row.filter('GHO').y
+        if row.filter(at_header('indID')).value == 'GHO':
+            assert row.filter('GHO').y == 0, row.filter('GHO').y
             continue
-        
+
         vdict = dict(value)
         for h in headers:
             vdict[h] = row.filter(at_header(h)).value
         u = units(vdict['ind_name'])
-        indicator = {'indID':vdict['indID'],
-                     'units':u[1],
-                     'name':u[0]}
+        indicator = {'indID': vdict['indID'],
+                     'units': u[1],
+                     'name': u[0]}
         del vdict['ind_name']
         Indicator(**indicator).save()
         v = Value(**vdict)
         print vdict
-        if not v.is_blank(): 
+        if not v.is_blank():
             v.save()
-        counter=counter+1
+        counter = counter + 1
     print counter
     session.commit()
 

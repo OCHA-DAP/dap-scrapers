@@ -17,14 +17,15 @@ log.addHandler(logging.StreamHandler())
 log.addHandler(logging.FileHandler("unicef.log"))
 log.level = logging.WARN
 
-dataset = { "dsID": "unicef-infobycountry",
-            "last_updated": None,
-            "last_scraped": orm.now(),
-            "name": "UNICEF info by country"
+dataset = {"dsID": "unicef-infobycountry",
+           "last_updated": None,
+           "last_scraped": orm.now(),
+           "name": "UNICEF info by country"
           }
 
 value_template = {"dsID": "unicef-infobycountry",
                   "is_number": True}
+
 
 def split_ind(indtext):
     """
@@ -41,27 +42,27 @@ def split_ind(indtext):
     2) extract bracketed text as units
     3) rest as ind name
     """
-    indtext=indtext.replace("*","")
+    indtext = indtext.replace("*", "")
     try:
         start, y1, y2, end = re.search("(.*?)(\d\d\d\d)-?(\d\d\d\d)?(.*)", indtext).groups()
     except:
-        print "Couldn't parse %r"% indtext
-        return {'indID': indtext, 'period':'', 'units':''}
+        print "Couldn't parse %r" % indtext
+        return {'indID': indtext, 'period': '', 'units': ''}
     if y2:
-        period = '/'.join((y1,y2))
+        period = '/'.join((y1, y2))
     else:
         period = y1
     rest = start + end
     unit_search = re.search("(.*)\((.*)\)(.*)", rest)
     if unit_search:
         preunit, unit, postunit = unit_search.groups()
-        ind = preunit.strip()+" "+postunit.strip()
+        ind = preunit.strip() + " " + postunit.strip()
     else:
         unit = ''
         ind = rest
-    ind=ind.strip(" ,")
+    ind = ind.strip(" ,")
     return {'indID': ind, 'period': period, 'units': unit}
-    
+
 
 def getstats(url, country="PLACEHOLDER"):
     handle = dl.grab(url)
@@ -69,10 +70,10 @@ def getstats(url, country="PLACEHOLDER"):
     saves = 0
     for mt in mts.tables:
         table = xypath.Table.from_messy(mt)
-        inds = table.filter(lambda b: b.x==0 and "EPI" in b.value)
-        if not inds: 
+        inds = table.filter(lambda b: b.x == 0 and "EPI" in b.value)
+        if not inds:
             continue
-        assert len(inds)==1
+        assert len(inds) == 1
         top, = table.filter(lambda b: 'to the top' in b.value)
         value, = inds.junction(top)
         for ind in inds:
@@ -81,15 +82,17 @@ def getstats(url, country="PLACEHOLDER"):
             values_tosave['source'] = url
             values_tosave['region'] = country
             values_tosave['value'] = value[2].value
-            indicator = {'indID': split['indID'], 'name': split['indID'], 'units': split['units']}
+            indicator = {'indID': split['indID'],
+                         'name': split['indID'],
+                         'units': split['units']}
             orm.Indicator(**indicator).save()
-            values_tosave['indID']= split['indID']
+            values_tosave['indID'] = split['indID']
             orm.Value(**values_tosave).save()
             saves = saves + 1
     if saves != 1:
-        print "huh, %d saves for %r"%(saves, url)
+        print "huh, %d saves for %r" % (saves, url)
 
-   
+
 def countrylist():
     baseurl = 'http://www.unicef.org/infobycountry'
     html = requests.get(baseurl).content
@@ -106,12 +109,12 @@ def countrylist():
         try:
             link, = root.xpath('//a[normalize-space(text())="Statistics"]/@href')
         except:
-            log.warn("No stats found for %r"%url)
+            log.warn("No stats found for %r" % url)
             continue
-        
+
         yield link, country.text_content()
-        
-if __name__=="__main__":
+
+if __name__ == "__main__":
     orm.DataSet(**dataset).save()
     for link, country in countrylist():
         print repr([link, country])

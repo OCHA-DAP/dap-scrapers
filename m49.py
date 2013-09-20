@@ -2,7 +2,6 @@ import requests
 import messytables
 import xypath
 import StringIO
-import json
 from hamcrest import contains_string
 import orm
 import lxml.html
@@ -21,12 +20,13 @@ fh = StringIO.StringIO(html)
 root = lxml.html.fromstring(html)
 updated = None
 for p in root.xpath("//td[@class='content']/p/text()"):
-    if re.search('\d\d\d\d', p): updated=dateutil.parser.parse(p).isoformat().split('T')[0]
+    if re.search('\d\d\d\d', p):
+        updated = dateutil.parser.parse(p).isoformat().split('T')[0]
 
-dataset = {'dsID':'m49',
+dataset = {'dsID': 'm49',
            'last_updated': updated,
            'last_scraped': orm.now(),
-           'name':'m49'}
+           'name': 'm49'}
 
 indicators = [{
                 'indID':'m49-name',
@@ -40,13 +40,14 @@ indicators = [{
 
 orm.DataSet(**dataset).save()
 
-for x in indicators: orm.Indicator(**x).save()
+for x in indicators:
+    orm.Indicator(**x).save()
 
 mt = messytables.HTMLTableSet(fh)
 mt_prune = [x for x in mt.tables if len(list(x)) > 200]
-assert len(mt_prune)==1
+assert len(mt_prune) == 1
 
-gb=False
+gb = False
 for messy in mt_prune:
     table = xypath.Table.from_messy(messy)
     alpha_code_header = table.filter(contains_string("ISO ALPHA-3")).assert_one()
@@ -59,22 +60,23 @@ for messy in mt_prune:
     alphas = [[x.value.strip() for x in row[1:]] for row in alpha_j]
     nums = [[x.value.strip() for x in row[1:]] for row in num_j]
     # 729 - Sudan - SDN
-    alphas.extend([['Sudan','SDN']])
-    nums.extend([['729','SDN']])
-    v_template = {'dsID':'m49',
+    alphas.extend([['Sudan', 'SDN']])
+    nums.extend([['729', 'SDN']])
+    v_template = {'dsID': 'm49',
                   'period': updated,
-      	          'source': 'http://unstats.un.org/unsd/methods/m49/m49alpha.htm',
+                  'source': 'http://unstats.un.org/unsd/methods/m49/m49alpha.htm',
                   'is_number': False}
     builder = []
     print alphas
     for entry in alphas:
-        v=dict(v_template)
-        v.update({'value':entry[0], 'region':entry[1], 'indID':'m49-name'})
+        v = dict(v_template)
+        v.update({'value': entry[0], 'region': entry[1], 'indID': 'm49-name'})
         orm.session.merge(orm.Value(**v))
-        if 'GBR' in repr(v): gb=True
+        if 'GBR' in repr(v):
+            gb = True
     for entry in nums:
-        v=dict(v_template)
-        v.update({'value':entry[0], 'region':entry[1], 'indID':'m49-num'})
+        v = dict(v_template)
+        v.update({'value': entry[0], 'region': entry[1], 'indID': 'm49-num'})
         orm.session.merge(orm.Value(**v))
 orm.session.commit()
 assert gb

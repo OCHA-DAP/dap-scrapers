@@ -8,15 +8,17 @@ import orm
    Indicator: indID, name, units
 """
 
+
 def yeartotimestamp(year):
     d = datetime.datetime(year=year, month=1, day=1)
     return int(d.strftime('%s'))
+
 
 def getcountrylist():
     for value in orm.session.query(orm.Value).filter(orm.Value.indID == "m49-name").all():
         yield value.region
 
-dsID="reliefweb-api"
+dsID = "reliefweb-api"
 
 dataset = {'dsID': dsID,
            'last_updated': orm.now(),
@@ -41,11 +43,9 @@ Infographic""".split('\n')
 #baseurl = "http://api.rwlabs.org/v0/report/list?limit=1&query[value]={country}&query[fields][0]=country&filter[field]=date.created&filter[value][from]={from}000&filter[value][to]={to}000"
 
 
-#baseurl = "http://api.rwlabs.org/v0/report/list?limit=1&query[value]={product}&query[fields][0]=ocha_product"
-
 def get_query(FROM, TO, COUNTRY, PRODUCT):
     return json.dumps({"limit": 0,
-                       "filter": 
+                       "filter":
                           {"operator": "and",
                            "conditions":
                               [
@@ -66,7 +66,7 @@ def get_query(FROM, TO, COUNTRY, PRODUCT):
 
 countries = list(getcountrylist())
 
-for product in ocha_products: 
+for product in ocha_products:
     niceproduct = product.replace(" ", "_")
     indID = "reliefweb_" + niceproduct
     indicator = {'indID': indID,
@@ -75,15 +75,15 @@ for product in ocha_products:
     orm.Indicator(**indicator).save()
 
     for country in countries:
-        for year in range(1990,2014):
+        for year in range(1990, 2014):
             params = dict()
             params['PRODUCT'] = niceproduct
             params['COUNTRY'] = country
-            params['FROM'] = 1000*yeartotimestamp(year)
-            params['TO'] = 1000*yeartotimestamp(year+1)-1
+            params['FROM'] = 1000 * yeartotimestamp(year)
+            params['TO'] = 1000 * yeartotimestamp(year + 1) - 1
             url = "http://api.rwlabs.org/v0/report/list"
             #url = 'http://httpbin.org/get'
-            r = requests.get(url, data = get_query(**params))
+            r = requests.get(url, data=get_query(**params))
             if 'data' not in r.json():
                 print r.json()
                 print country

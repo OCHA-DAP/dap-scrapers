@@ -24,7 +24,7 @@ http://esa.un.org/unpd/wpp/Excel-Data/EXCEL_FILES/1_Population/WPP2012_POP_F06_P
 
 for sheet in spreadsheets:
     shortname = sheet.split('/')[-1].split('.')[0]
-    dsID = 'esa-unpd-'+shortname.replace('_','-').split('-')[0]
+    dsID = 'esa-unpd-' + shortname.replace('_', '-').split('-')[0]
     year_text, = re.findall('\d{4}', dsID)
     dataset = {"dsID": dsID,
                "last_updated": year_text,
@@ -40,7 +40,7 @@ for sheet in spreadsheets:
     value_template = {"dsID": dsID,
                       "is_number": True,
                       "source": sheet}
-   
+
     raw = dl.grab(sheet)
     mtables = messytables.any.any_tableset(raw)
     names = [x.name for x in mtables.tables]
@@ -55,16 +55,16 @@ for sheet in spreadsheets:
     years = ccode_header.fill(xypath.RIGHT)
     for region_cell, year_cell, value_cell in regions.junction(years):
         value = dict(value_template)
-        value['indID']=indicator['indID']
-        value['region']=region_cell.value
+        value['indID'] = indicator['indID']
+        value['region'] = region_cell.value
         year_value = year_cell.value
         if isinstance(year_value, basestring) and '-' in year_value:
             year1, _, year2 = year_value.partition('-')
-            year_count = int(year2)-int(year1)
+            year_count = int(year2) - int(year1)
             assert year_count == 5
-            year_value = "%s/P%dY"%(year1, year_count)
-        value['period']=year_value
-        value['value']=value_cell.value
+            year_value = "%s/P%dY" % (year1, year_count)
+        value['period'] = year_value
+        value['value'] = value_cell.value
         orm.Value(**value).save()
         print value
 orm.session.commit()

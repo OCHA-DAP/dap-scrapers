@@ -27,8 +27,8 @@ dataset = {'dsID': 'wikipedia',
 orm.DataSet(**dataset).save()
 
 for h in headers:
-    indicator = {'indID': 'wikipedia:'+h,
-                 'name': 'Wikipedia: '+h,
+    indicator = {'indID': 'wikipedia:' + h,
+                 'name': 'Wikipedia: ' + h,
                  'units': 'url'}
     orm.Indicator(**indicator).save()
 
@@ -72,7 +72,7 @@ for country in headinglist:
         if d_matches[head]:
             value = dict(value_template)
             value['region'] = country
-            value['indID'] = "wikipedia:"+head
+            value['indID'] = "wikipedia:" + head
             value['source'] = wikibase % (country, d_matches[head])
             value['value'] = value['source']
             print value

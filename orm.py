@@ -8,20 +8,23 @@ import datetime
 from canon import canonicalise, canon_number, canon_period
 import atexit
 
+
 def now():
     return datetime.datetime.now().isoformat()
+
 
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
     cursor.execute("PRAGMA foreign_keys=ON")
     cursor.close()
-                
+
 echo = False
 engine = create_engine("sqlite:///ocha.db", echo=echo)
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
+
 
 class Value(Base):
     __tablename__ = "value"
@@ -39,8 +42,8 @@ class Value(Base):
         return self.value is None or self.value.strip() == ''
 
     def save(self):
-        self.region=canonicalise(self.region)
-        self.period=canon_period(self.period)
+        self.region = canonicalise(self.region)
+        self.period = canon_period(self.period)
         if self.region is None:
             return
         if self.is_number:
@@ -54,13 +57,14 @@ class Value(Base):
             print self.__dict__
             raise
 
+
 class DataSet(Base):
     __tablename__ = "dataset"
     dsID = Column(String, primary_key=True)
     last_updated = Column(String)
     last_scraped = Column(String)
     name = Column(String)
-    
+
     def save(self):
         session.merge(self)
 
@@ -75,6 +79,7 @@ class Indicator(Base):
         session.merge(self)
 
 Base.metadata.create_all(engine)
+
 
 @atexit.register
 def exithandler():

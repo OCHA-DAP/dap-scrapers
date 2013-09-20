@@ -5,15 +5,18 @@ import orm
    Indicator: indID, name, units
 """
 
+
 def accuweather():
     baseindexurl = "http://www.accuweather.com/ajax-service/getcountrylist?region=%s&languageID=1"
     baseleafurl = "http://www.accuweather.com/en/%s/%s-weather"
     regions = "afr ant arc asi cac eur mea nam ocn sam".split(" ")
 
     for reg in regions:
-        j = requests.get(baseindexurl%reg).json()
+        j = requests.get(baseindexurl % reg).json()
         for country in j['Countries']:
-            yield {'region':country['Code'], 'value':baseleafurl%(country['Code'], country['OfficialName'])}
+            yield {'region': country['Code'],
+                   'value': baseleafurl % (country['Code'],
+                                          country['OfficialName'])}
 
 print list(accuweather())
 

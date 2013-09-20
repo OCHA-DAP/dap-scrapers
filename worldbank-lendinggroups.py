@@ -9,11 +9,11 @@ root = lxml.html.fromstring(html)
 divs = root.xpath("//div[@class='node-body']/div[.//*[contains(text(),'economies')]]")
 builder = []
 for div in divs:
-   econ_raw, = div.xpath(".//p/b/text()")
-   econ, = re.findall("(.*) economies", econ_raw)
-   els = div.xpath(".//following::table[1]//td")
-   countries = [x.text_content().strip() for x in els]
-   builder.extend([{'value': econ, 'region':country} for country in countries])
+    econ_raw, = div.xpath(".//p/b/text()")
+    econ, = re.findall("(.*) economies", econ_raw)
+    els = div.xpath(".//following::table[1]//td")
+    countries = [x.text_content().strip() for x in els]
+    builder.extend([{'value': econ, 'region':country} for country in countries])
 print builder
 
 """Value: dsID, region, indID, period, value, source, is_number

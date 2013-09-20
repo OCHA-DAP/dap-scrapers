@@ -1,8 +1,6 @@
-import requests
 import xypath
 import messytables
 import dl
-import re
 import orm
 
 """Value: dsID, region, indID, period, value, source, is_number
@@ -28,7 +26,8 @@ orm.Indicator(**indicator).save()
 
 
 def niceyear(s):
-    return s.partition("-")[0]+"/P3Y"
+    return s.partition("-")[0] + "/P3Y"
+
 
 def do_file(url="http://bit.ly/14FRxGV"):
     fh = dl.grab(url)
@@ -36,7 +35,7 @@ def do_file(url="http://bit.ly/14FRxGV"):
     v12 = mts['V12']
     xy = xypath.Table.from_messy(v12)
     print "...got"
-    home =  xy.filter("(home)")
+    home = xy.filter("(home)")
     years = home.fill(xypath.RIGHT)
     countries = home.fill(xypath.DOWN)
     for country, year, value in countries.junction(years):
@@ -46,6 +45,6 @@ def do_file(url="http://bit.ly/14FRxGV"):
         values['period'] = niceyear(year.value)  # TODO
         values['value'] = value.value
         orm.Value(**values).save()
-    orm.session.commit()  
-    
+    orm.session.commit()
+
 do_file()

@@ -1,11 +1,8 @@
-import StringIO
-import requests
 import xypath
 import messytables
 from hamcrest import equal_to, is_in
 from orm import session, Value, DataSet, Indicator
 import orm
-import datetime
 import re
 import dl
 
@@ -45,27 +42,30 @@ FP.CPI.TOTL.ZG
    """
 
 
-dataset = {'dsID':'World Bank',
-           'last_updated':None,
-           'last_scraped':orm.now(),
+dataset = {'dsID': 'World Bank',
+           'last_updated': None,
+           'last_scraped': orm.now(),
            'name': 'World Bank'}
 
-DataSet(**dataset).save()    
+DataSet(**dataset).save()
+
 
 def getcountrylist():
     for value in session.query(Value).filter(Value.indID == "m49-name").all():
         yield value.region
 
+
 def getcountry(threeletter="PAK"):
     print threeletter
     baseurl = "http://api.worldbank.org/datafiles/%s_Country_MetaData_en_EXCEL.xls"
-    value = {'dsID':'World Bank',
-             'region':threeletter,
-             'source':baseurl%threeletter,
-             'is_number':True}
-    
-    fh = dl.grab(baseurl%threeletter, [404])
-    if not fh: return
+    value = {'dsID': 'World Bank',
+             'region': threeletter,
+             'source': baseurl % threeletter,
+             'is_number': True}
+
+    fh = dl.grab(baseurl % threeletter, [404])
+    if not fh:
+        return
     messy = messytables.excel.XLSTableSet(fh)
     table = xypath.Table.from_messy(list(messy.tables)[0])
     indicators = table.filter(is_in(indicator_list))
@@ -83,18 +83,18 @@ def getcountry(threeletter="PAK"):
         vdict['period'] = year_cell.value
         vdict['value'] = value_cell.value
 
-        indicator = {'indID':vdict['indID']}
-        nameunits = re.search('(.*)\((.*)\)',vdict['indID'])
+        indicator = {'indID': vdict['indID']}
+        nameunits = re.search('(.*)\((.*)\)', vdict['indID'])
         if nameunits:
-            (indicator['name'], indicator['units'])=nameunits.groups()
+            (indicator['name'], indicator['units']) = nameunits.groups()
         else:
-            indicator['name']=vdict['indID']
-            indicator['units']='uno'
+            indicator['name'] = vdict['indID']
+            indicator['units'] = 'uno'
         Indicator(**indicator).save()
         v = Value(**vdict)
         if not v.is_blank():
             v.save()
-    print len(session.query(Value).filter(Value.dsID=='World Bank').all())
+    print len(session.query(Value).filter(Value.dsID == 'World Bank').all())
     session.commit()
 
 for country in getcountrylist():
