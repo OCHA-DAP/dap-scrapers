@@ -1,0 +1,7 @@
+#!/bin/bash -xe
+cd http
+rm -f archive.sql csv.zip dataset.csv indicator.csv value.csv sql.zip all.zip
+cat ../archive.sql | sqlite3 ../ocha.db
+zip csv.zip dataset.csv indicator.csv value.csv
+zip sql.zip all.sql
+echo "all ok"
