@@ -71,14 +71,15 @@ def canon_period(p):
 def updatedb():
     """update db with data from a file in a CSV-like format"""
     m49 = 'm49' in sys.argv[1]
-    chd = 'chd' in sys.argv[1]
+    chd_in = 'chd' in sys.argv[1]
     for i, line in enumerate(fileinput.input()):
         left, right = getpair(line.decode('utf-8'))
-        left = dedupe.apply_one(left)  # convert to a key
-        if not m49:
+        if not chd_in:
+            left = dedupe.apply_one(left)  # convert to a key
+        if not m49 and not chd_in:
             right = canonicalise(right)  # convert to One True Name
         if right is not None:
-            if not chd:
+            if not chd_in:
                 region.upsert({'name': left, 'code': right}, ['name', 'code'])
             else:
                 chd.upsert({'sw_name': left, 'chd_code': right},
