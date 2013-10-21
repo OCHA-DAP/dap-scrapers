@@ -1,0 +1,211 @@
+HDR:100106|PSE110
+HDR:103006|PVE110
+HDR:105906|PVE120
+HDR:38006|PVE010
+HDR:57506|PVH120
+HDR:68606|_HDR:68606
+HDR:69706|PVE030
+HDR:89006|PVH180
+HDR:98706|PVX070
+HDR:HDI Rank|PSE220
+HDR:101406|PVE040
+HDR:38906|PSE160
+Age dependency ratio, old (% of working-age population)|PSE140
+Age dependency ratio, young (% of working-age population)|PSE150
+GNI (current US$)|PSE120
+Inflation, consumer prices (annual %)|PSE200
+International migrant stock (% of population)|_International migrant stock (% of population)
+Internet users (per 100 people)|PCX100
+Land area (sq. km)|_Land area (sq. km)
+Mobile cellular subscriptions (per 100 people)|PCX090
+Mortality rate, adult, female (per 1,000 female adults)|PVH080
+Mortality rate, adult, male (per 1,000 male adults)|PVH090
+Net ODA received per capita (current US$)|_Net ODA received per capita (current US$)
+Population density (people per sq. km of land area)|PSP090
+Population growth (annual %)|PSP060
+Population, total|_Population, total
+Access to electricity (% of population)|_Access to electricity (% of population)
+GDP per capita, PPP (current international $)|PSE030
+GINI index|PSE210
+GNI per capita, PPP (current international $)|PSE090
+GNI, PPP (current international $)|_GNI, PPP (current international $)
+Household final consumption expenditure, PPP (constant 2005 international $)|PSE130
+Logistics performance index: Overall (1=low to 5=high)|PCX130
+Number of infant deaths|_Number of infant deaths
+Population in urban agglomerations of more than 1 million|PSP110
+Roads, total network (km)|PVL030
+Poverty headcount ratio at $1.25 a day (PPP) (% of population)|PSE170
+Rail lines (total route-km)|PVL040
+accuweather_url|CG260
+gna-ci|PVX020
+gna-vi|PVX010
+emdat:no_affected|CH090
+emdat:no_disasters|CH070
+emdat:no_homeless|_emdat:no_homeless
+emdat:no_injured|_emdat:no_injured
+emdat:no_killed|CH080
+emdat:total_affected|_emdat:total_affected
+emdat:total_dam|CH100
+WPP2012_MORT_F01_1_IMR_BOTH_SEXES|PVH150
+WPP2012_MORT_F01_2_Q5_BOTH_SEXES|PVH100
+WPP2012_MORT_F02_CRUDE_DEATH_RATE|_WPP2012_MORT_F02_CRUDE_DEATH_RATE
+WPP2012_MORT_F03_1_DEATHS_BOTH_SEXES|PVH050
+WPP2012_MORT_F07_1_LIFE_EXPECTANCY_0_BOTH_SEXES|PVH010
+WPP2012_POP_F01_1_TOTAL_POPULATION_BOTH_SEXES|PSP010
+WPP2012_POP_F02_POPULATION_GROWTH_RATE|PSP050
+WPP2012_POP_F05_MEDIAN_AGE|PSP070
+WPP2012_POP_F06_POPULATION_DENSITY|PSP080
+WUP2011-F02-Proportion_Urban|PSP100
+undernourishment|PVN010
+calories_per_person|PVF020
+HDI:98606|PVX060
+m49-name|_m49-name
+m49-num|CG060
+Fixed telephone lines per 100 inhabitants|PCX080
+Internet users per 100 population|PCX070
+Mobile cellular subscriptions per 100 inhabitants|PCX051
+Proportion of the population using improved drinking water sources, total|PVW010
+Proportion of the population using improved sanitation facilities, total|PVW040
+Total net enrolment ratio in primary education, both sexes|PVE130
+Children 1 year old immunized against measles, percentage|_Children 1 year old immunized against measles, percentage
+Children under 5 moderately or severely underweight, percentage|PVN050
+Children under five mortality rate per 1,000 live births|PVH140
+Maternal mortality ratio per 100,000 live births|PVH190
+Population undernourished, millions|_Population undernourished, millions
+Population undernourished, percentage|_Population undernourished, percentage
+Routine EPI vaccines financed by government|PCH090
+% of routine EPI vaccines financed by government|_% of routine EPI vaccines financed by government
+unterm:Capital City|CG080
+unterm:Currency Abbr.|CG120
+unterm:Date of Entry into UN|CG290
+unterm:Formal Name|CG020
+unterm:ISO Country alpha-2-code|_unterm:ISO Country alpha-2-code
+unterm:ISO Country alpha-3-code|CG070
+unterm:ISO Currency Code|CG140
+unterm:Languages|CG100
+unterm:Short Name|CG030
+Adolescent fertility rate (per 1000 girls aged 15-19 years)|_Adolescent fertility rate (per 1000 girls aged 15-19 years)
+Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - All causes|_Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - All causes
+Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cancer|_Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cancer
+Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cardiovasular disease and diabetes|_Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cardiovasular disease and diabetes
+Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Chronic respiratory conditions|_Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Chronic respiratory conditions
+Alcohol consumption among adults aged ?15 years (litres of pure alcohol per person per year)|_Alcohol consumption among adults aged ?15 years (litres of pure alcohol per person per year)
+Annual population growth rate (%)|_Annual population growth rate (%)
+Antenatal care coverage - at least four visits (%)|_Antenatal care coverage - at least four visits (%)
+Antenatal care coverage - at least one visit (%)|_Antenatal care coverage - at least one visit (%)
+Antiretroviral therapy coverage among people with advanced HIV infection (%)|_Antiretroviral therapy coverage among people with advanced HIV infection (%)
+Births attended by skilled health personnel (%)|_Births attended by skilled health personnel (%)
+Births by caesarean section (%)|_Births by caesarean section (%)
+Cellular subscribers (per 100 population)|PCX110
+Cholera - number of reported cases|_Cholera - number of reported cases
+Contraceptive prevalence (%)|_Contraceptive prevalence (%)
+Crude birth rate (per 1000 population)|_Crude birth rate (per 1000 population)
+Crude death rate (per 1000 population)|_Crude death rate (per 1000 population)
+Deaths due to HIV/AIDS (per 100 000 population)|_Deaths due to HIV/AIDS (per 100 000 population)
+Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds (%)|_Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds (%)
+External resources for health as a percentage of total expenditure on health|_External resources for health as a percentage of total expenditure on health
+General government expenditure on health as a percentage of total expenditure on health|_General government expenditure on health as a percentage of total expenditure on health
+General government expenditure on health as a percentage of total government expenditure|_General government expenditure on health as a percentage of total government expenditure
+Gross national income per capita (PPP int. $)|_Gross national income per capita (PPP int. $)
+Hepatitis B (HepB3) immunization coverage among 1-year-olds (%)|_Hepatitis B (HepB3) immunization coverage among 1-year-olds (%)
+Hib (Hib3) immunization coverage among 1-year-olds (%)|_Hib (Hib3) immunization coverage among 1-year-olds (%)
+Malaria - number of reported cases|_Malaria - number of reported cases
+Malaria - number of reported deaths|_Malaria - number of reported deaths
+Maternal mortality ratio (per 100 000 live births) - Interagency estimates|PVH100
+Measles (MCV) immunization coverage among 1-year-olds (%)|_Measles (MCV) immunization coverage among 1-year-olds (%)
+Measles - number of reported cases|_Measles - number of reported cases
+Neonatal tetanus - number of reported cases|_Neonatal tetanus - number of reported cases
+Neonates protected at birth against neonatal tetanus (PAB) (%)|_Neonates protected at birth against neonatal tetanus (PAB) (%)
+Out-of-pocket expenditure as a percentage of private expenditure on health|_Out-of-pocket expenditure as a percentage of private expenditure on health
+Per capita government expenditure on health (PPP int. $)|_Per capita government expenditure on health (PPP int. $)
+Per capita government expenditure on health at average exchange rate (US$)|_Per capita government expenditure on health at average exchange rate (US$)
+Per capita total expenditure on health (PPP int. $)|_Per capita total expenditure on health (PPP int. $)
+Per capita total expenditure on health at average exchange rate (US$)|_Per capita total expenditure on health at average exchange rate (US$)
+Population (in thousands) total|_Population (in thousands) total
+Population living in urban areas (%)|_Population living in urban areas (%)
+Population median age (years)|_Population median age (years)
+Population proportion over 60 (%)|_Population proportion over 60 (%)
+Population proportion under 15 (%)|_Population proportion under 15 (%)
+Postnatal care visit within two days of birth (%)|_Postnatal care visit within two days of birth (%)
+Prevalence of HIV among adults aged 15 to 49 (%)|_Prevalence of HIV among adults aged 15 to 49 (%)
+Private expenditure on health as a percentage of total expenditure on health|_Private expenditure on health as a percentage of total expenditure on health
+Rubella - number of reported cases|_Rubella - number of reported cases
+Total (recorded + unrecorded) adult (15+ years) per capita consumption, projected estimates for 2008|_Total (recorded + unrecorded) adult (15+ years) per capita consumption, projected estimates for 2008
+Total density per million population: Computed tomography|_Total density per million population: Computed tomography
+Total expenditure on health as a percentage of gross domestic product|PCH010
+Total fertility rate (per woman)|_Total fertility rate (per woman)
+Total tetanus - number of reported cases|_Total tetanus - number of reported cases
+Antiretroviral therapy coverage among people with advanced HIV infection (%), WHO 2006 guidelines|_Antiretroviral therapy coverage among people with advanced HIV infection (%), WHO 2006 guidelines
+Children aged <5 years with fever who received treatment with any antimalarial (%)|_Children aged <5 years with fever who received treatment with any antimalarial (%)
+Estimated percentage of pregnant women living with HIV who received antiretrovirals for preventing mother-to-child transmission|_Estimated percentage of pregnant women living with HIV who received antiretrovirals for preventing mother-to-child transmission
+Literacy rate among adults aged >= 15 years (%)|PVE050
+Pertussis - number of reported cases|_Pertussis - number of reported cases
+Total density per million population: Radiotherapy|_Total density per million population: Radiotherapy
+Children aged <5 years with ARI symptoms taken to a health facility (%)|_Children aged <5 years with ARI symptoms taken to a health facility (%)
+Children aged <5 years with ARI symptoms who took antibiotic treatment (%)|_Children aged <5 years with ARI symptoms who took antibiotic treatment (%)
+Children aged <5 years with diarrhoea receiving ORT (%)|_Children aged <5 years with diarrhoea receiving ORT (%)
+Most recent census (year)|_Most recent census (year)
+Mumps - number of reported cases|_Mumps - number of reported cases
+Number of nursing and midwifery personnel|_Number of nursing and midwifery personnel
+Number of physicians|_Number of physicians
+Nursing and midwifery personnel density (per 10 000 population)|_Nursing and midwifery personnel density (per 10 000 population)
+Physicians density (per 10 000 population)|PCH030
+Social security expenditure on health as a percentage of general government expenditure on health|_Social security expenditure on health as a percentage of general government expenditure on health
+Unmet need for family planning (%)|_Unmet need for family planning (%)
+Civil registration coverage of births (%)|_Civil registration coverage of births (%)
+Density of pharmaceutical personnel (per 10 000 population)|PCH040
+Dentistry personnel density (per 10 000 population)|_Dentistry personnel density (per 10 000 population)
+Ill-defined causes in cause-of-death registration (%)|_Ill-defined causes in cause-of-death registration (%)
+Number of dentistry personnel|_Number of dentistry personnel
+Number of pharmaceutical personnel|_Number of pharmaceutical personnel
+Private prepaid plans as a percentage of private expenditure on health|_Private prepaid plans as a percentage of private expenditure on health
+Civil registration coverage of cause-of-death (%)|_Civil registration coverage of cause-of-death (%)
+Diphtheria - number of reported cases|_Diphtheria - number of reported cases
+Low-birth-weight newborns (%)|_Low-birth-weight newborns (%)
+Median availability of selected generic medicines (%) - Private|_Median availability of selected generic medicines (%) - Private
+Median availability of selected generic medicines (%) - Public|PCH080
+Median consumer price ratio of selected generic medicines - Private|_Median consumer price ratio of selected generic medicines - Private
+Children aged 6-59 months who received vitamin A supplementation (%)|_Children aged 6-59 months who received vitamin A supplementation (%)
+Meningitis - number of reported cases|_Meningitis - number of reported cases
+Median consumer price ratio of selected generic medicines - Public|PCH110
+Yellow fever - number of reported cases|_Yellow fever - number of reported cases
+H5N1 influenza - number of reported cases|PVH210
+Japanese encephalitis - number of reported cases|_Japanese encephalitis - number of reported cases
+Congenital Rubella Syndrome - number of reported cases|_Congenital Rubella Syndrome - number of reported cases
+Density of environment and public health workers (per 10 000 population)|_Density of environment and public health workers (per 10 000 population)
+Number of environment and public health workers|_Number of environment and public health workers
+Plague - number of reported cases|_Plague - number of reported cases
+Age-standardized mortality rate by cause (per 100 000 population) - Communicable|_Age-standardized mortality rate by cause (per 100 000 population) - Communicable
+Age-standardized mortality rate by cause (per 100 000 population) - Injuries|_Age-standardized mortality rate by cause (per 100 000 population) - Injuries
+Age-standardized mortality rate by cause (per 100 000 population) - Noncommunicable|_Age-standardized mortality rate by cause (per 100 000 population) - Noncommunicable
+Case detection rate for all forms of tuberculosis|_Case detection rate for all forms of tuberculosis
+Community health workers density (per 10 000 population)|PCH050
+Deaths due to tuberculosis among HIV-negative people (per 100 000 population)|_Deaths due to tuberculosis among HIV-negative people (per 100 000 population)
+Distribution of causes of death among children aged <5 years (%) - Birth asphyxia|_Distribution of causes of death among children aged <5 years (%) - Birth asphyxia
+Distribution of causes of death among children aged <5 years (%) - Congenital anomalies|_Distribution of causes of death among children aged <5 years (%) - Congenital anomalies
+Distribution of causes of death among children aged <5 years (%) - Diarrhoea|_Distribution of causes of death among children aged <5 years (%) - Diarrhoea
+Distribution of causes of death among children aged <5 years (%) - Injuries|_Distribution of causes of death among children aged <5 years (%) - Injuries
+Distribution of causes of death among children aged <5 years (%) - Measles|_Distribution of causes of death among children aged <5 years (%) - Measles
+Distribution of causes of death among children aged <5 years (%) - Neonatal sepsis|_Distribution of causes of death among children aged <5 years (%) - Neonatal sepsis
+Distribution of causes of death among children aged <5 years (%) - Other diseases|_Distribution of causes of death among children aged <5 years (%) - Other diseases
+Distribution of causes of death among children aged <5 years (%) - Pneumonia|_Distribution of causes of death among children aged <5 years (%) - Pneumonia
+Distribution of causes of death among children aged <5 years (%) - Prematurity|_Distribution of causes of death among children aged <5 years (%) - Prematurity
+Distribution of years of life lost by broader causes (%) - Communicable|_Distribution of years of life lost by broader causes (%) - Communicable
+Distribution of years of life lost by broader causes (%) - Injuries|_Distribution of years of life lost by broader causes (%) - Injuries
+Distribution of years of life lost by broader causes (%) - Noncommunicable|_Distribution of years of life lost by broader causes (%) - Noncommunicable
+Hospital beds (per 10 000 population)|PCH060
+Incidence of tuberculosis (per 100 000 population per year)|_Incidence of tuberculosis (per 100 000 population per year)
+Number of community health workers|_Number of community health workers
+Prevalence of tuberculosis (per 100 000 population)|_Prevalence of tuberculosis (per 100 000 population)
+Smear-positive tuberculosis treatment-success rate (%)|_Smear-positive tuberculosis treatment-success rate (%)
+Tuberculosis - new and relapse cases|_Tuberculosis - new and relapse cases
+Leprosy - number of reported cases|_Leprosy - number of reported cases
+Psychiatric beds per 10 000 population|_Psychiatric beds per 10 000 population
+WHS9_86|_WHS9_86
+WHS9_88|_WHS9_88
+WHS9_89|_WHS9_89
+WHS9_92|_WHS9_92
+WHS9_96|_WHS9_96
+WHS9_97|_WHS9_97
+WHS9_90|_WHS9_90
+worldbank-income|CG150

@@ -9,6 +9,7 @@ import scrumble
 
 db = dataset.connect('sqlite:///canon.db')
 region = db['region']
+chd = db['chd']
 
 log = logging.getLogger("canon")
 log.addHandler(logging.StreamHandler())
@@ -25,8 +26,16 @@ def getpair(text):
     raise RuntimeError("getpair: found none of %r in %r." % (chars, text))
 
 
+def chd_id(text):
+    """conceptually very similar to canon, but for Common Humanitarian Dataset IDs.
+       Features significantly less faff due to relying on exact string match."""
+    if chd.find_one(sw_name=text):
+        return chd.chd_code
+    log.warn("No CHD code found for %r" % text)
+
+
 def canonicalise(rawname):
-    """see if there's a matching row in the DB already, give answer"""
+    """see if there's a matching country in the DB already, give answer"""
     if len(rawname) == 3 and region.find_one(code=rawname.upper()):
         return rawname.upper()
     name = dedupe.apply_one(rawname)
@@ -59,15 +68,21 @@ def canon_period(p):
     return str(int(p))
 
 
-def updatedb(m49=False):
+def updatedb():
     """update db with data from a file in a CSV-like format"""
+    m49 = 'm49' in sys.argv[1]
+    chd = 'chd' in sys.argv[1]
     for i, line in enumerate(fileinput.input()):
         left, right = getpair(line.decode('utf-8'))
         left = dedupe.apply_one(left)  # convert to a key
         if not m49:
             right = canonicalise(right)  # convert to One True Name
         if right is not None:
-            region.upsert({'name': left, 'code': right}, ['name', 'code'])
+            if not chd:
+                region.upsert({'name': left, 'code': right}, ['name', 'code'])
+            else:
+                chd.upsert({'sw_name': left, 'chd_code': right},
+                           ['sw_name', 'chd_code'])
 
 if __name__ == "__main__":
     updatedb()
@@ -84,3 +99,4 @@ def _ignore():
                 canonicalise(i)
             except Exception as e:
                 print e
+
