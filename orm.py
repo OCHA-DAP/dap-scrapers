@@ -77,6 +77,7 @@ class Indicator(Base):
     units = Column(String)
 
     def save(self):
+        self.indID = chd_id(self.indID)
         session.merge(self)
 
 Base.metadata.create_all(engine)

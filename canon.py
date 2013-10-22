@@ -16,6 +16,14 @@ log.addHandler(logging.StreamHandler())
 log.addHandler(logging.FileHandler("canon.log"))
 log.level = logging.WARN
 
+class Memoize:
+    def __init__(self, f):
+        self.f = f
+        self.memo = {}
+    def __call__(self, *args):
+        if not args in self.memo:
+            self.memo[args] = self.f(*args)
+        return self.memo[args]
 
 def getpair(text):
     """cheap and dirty CSV parsing"""
@@ -25,16 +33,19 @@ def getpair(text):
             return [x.strip() for x in text.split(char)]
     raise RuntimeError("getpair: found none of %r in %r." % (chars, text))
 
-
-def chd_id(text):
+def chd_id_nomemo(text):
     """conceptually very similar to canon, but for Common Humanitarian Dataset IDs.
        Features significantly less faff due to relying on exact string match."""
-    if chd.find_one(sw_name=text):
-        return chd.chd_code
-    log.warn("No CHD code found for %r" % text)
+    match = chd.find_one(sw_name=text)
+    if match:
+        return match.chd_code
+    else:
+        log.warn("No CHD code found for %r" % text)
+
+chd_id = Memoize(chd_id_nomemo)
 
 
-def canonicalise(rawname):
+def country_id_nomemo(rawname):
     """see if there's a matching country in the DB already, give answer"""
     if len(rawname) == 3 and region.find_one(code=rawname.upper()):
         return rawname.upper()
@@ -47,6 +58,8 @@ def canonicalise(rawname):
             log.warn("Name %r (%r) not found." % (rawname, name))
             return None
     return nicename.code
+
+canonicalise = Memoize(country_id_nomemo)
 
 
 def canon_number(f):
