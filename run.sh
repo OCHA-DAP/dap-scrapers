@@ -4,6 +4,7 @@ for PYFILE in m49.py acled.py echo.py emdat.py esa.py faosec.py faostat.py hdr-d
 do
     echo $PYFILE
     python $PYFILE > log1/$PYFILE.txt 2> log2/$PYFILE.txt
+    echo EXIT: $?
 done
 
 # todo: reliefweb-api
