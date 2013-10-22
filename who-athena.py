@@ -26,7 +26,7 @@ DataSet(**dataset).save()
 
 
 def getcountrylist():
-    for value in session.query(Value).filter(Value.indID == "m49-name").all():
+    for value in session.query(Value).filter(Value.indID == "CG060").all():
         yield value.region
 
 

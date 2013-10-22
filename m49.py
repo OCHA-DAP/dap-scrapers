@@ -71,12 +71,12 @@ for messy in mt_prune:
     for entry in alphas:
         v = dict(v_template)
         v.update({'value': entry[0], 'region': entry[1], 'indID': 'm49-name'})
-        orm.session.merge(orm.Value(**v))
+        orm.Value(**v).save()
         if 'GBR' in repr(v):
             gb = True
     for entry in nums:
         v = dict(v_template)
         v.update({'value': entry[0], 'region': entry[1], 'indID': 'm49-num'})
-        orm.session.merge(orm.Value(**v))
+        orm.Value(**v).save()
 orm.session.commit()
 assert gb

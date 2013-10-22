@@ -14,7 +14,7 @@ def yeartotimestamp(year):
 
 
 def getcountrylist():
-    for value in orm.session.query(orm.Value).filter(orm.Value.indID == "m49-name").all():
+    for value in orm.session.query(orm.Value).filter(orm.Value.indID == "CG060").all():
         yield value.region
 
 dsID = "reliefweb-api"
@@ -66,7 +66,7 @@ def get_job_query(COUNTRY):
     return json.dumps({"limit": 0,
                        "filter":
                           {"operator": "and",
-                           "conditions": 
+                           "conditions":
                               [
                                   {'field': 'country',
                                    'value': COUNTRY

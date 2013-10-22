@@ -2,7 +2,7 @@ import orm
 
 
 def getcountrylist():
-    for value in orm.session.query(orm.Value).filter(orm.Value.indID == "m49-name").all():
+    for value in orm.session.query(orm.Value).filter(orm.Value.indID == "CG060").all():
         yield value.region
 
 dsIDs = """
