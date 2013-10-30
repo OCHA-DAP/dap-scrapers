@@ -1,0 +1,80 @@
+# Authentication
+# http://docs.ckan.org/en/ckan-2.0.2/api.html#authentication-and-api-keys
+
+# API call reference
+# http://docs.ckan.org/en/ckan-2.0.2/api.html#action-api-reference
+
+0 MANUAL) # create new dataset
+curl http://ckan.megginson.com/api/3/action/package_create --data '{"name":"nope"}' -H Authorization:$CKAN_APIKEY
+
+# get info on dataset
+curl http://ckan.megginson.com/api/3/action/package_show --data '{"id":"nope"}'
+# {"help": "Return the metadata of a dataset (package) and its resources.\n\n    :param id: the id or name of the dataset\n    :type id: string\n\n    :rtype: dictionary\n\n    ", "success": true, "result": {"license_title": null, "maintainer": null, "relationships_as_object": [], "private": false, "maintainer_email": null, "revision_timestamp": "2013-10-30T11:30:35.865547", "id": "51b25ca0-9c2e-4e66-85e3-37a13c19a85d", "metadata_created": "2013-10-30T11:30:35.865547", "owner_org": null, "metadata_modified": "2013-10-30T11:30:35.865547", "author": null, "author_email": null, "state": "active", "version": null, "license_id": null, "type": "dataset", "resources": [], "num_resources": 0, "tags": [], "tracking_summary": {"total": 0, "recent": 0}, "groups": [], "relationships_as_subject": [], "num_tags": 0, "name": "nope", "isopen": false, "url": null, "notes": null, "title": "nope", "extras": [], "organization": null, "revision_id": "0b836530-7d38-44c0-9487-28f87a872e2f"}}
+
+2) # use id from that to add new resource
+curl  http://ckan.megginson.com/api/3/action/resource_create --data '{"package_id":"51b25ca0-9c2e-4e66-85e3-37a13c19a85d", "url":"http://url.invalid"}' -H Authorization:$CKAN_APIKEY
+#{"help": "Appends a new resource to a datasets list of resources.\n\n    :param package_id: id of package that the resource needs should be added to.\n    :type package_id: string\n    :param url: url of resource\n    :type url: string\n    :param revision_id: (optional)\n    :type revisiion_id: string\n    :param description: (optional)\n    :type description: string\n    :param format: (optional)\n    :type format: string\n    :param hash: (optional)\n    :type hash: string\n    :param name: (optional)\n    :type name: string\n    :param resource_type: (optional)\n    :type resource_type: string\n    :param mimetype: (optional)\n    :type mimetype: string\n    :param mimetype_inner: (optional)\n    :type mimetype_inner: string\n    :param webstore_url: (optional)\n    :type webstore_url: string\n    :param cache_url: (optional)\n    :type cache_url: string\n    :param size: (optional)\n    :type size: int\n    :param created: (optional)\n    :type created: iso date string\n    :param last_modified: (optional)\n    :type last_modified: iso date string\n    :param cache_last_updated: (optional)\n    :type cache_last_updated: iso date string\n    :param webstore_last_updated: (optional)\n    :type webstore_last_updated: iso date string\n\n    :returns: the newly created resource\n    :rtype: dictionary\n\n    ", "success": true, "result": {"resource_group_id": "96d02a95-2b37-4eb8-91ac-faf7f383d600", "cache_last_updated": null, "revision_timestamp": "2013-10-30T11:41:32.776302", "webstore_last_updated": null, "id": "f020028c-d05b-476e-81f7-f43e6f31689a", "size": null, "state": "active", "hash": "", "description": "", "format": "", "tracking_summary": {"total": 0, "recent": 0}, "mimetype_inner": null, "mimetype": null, "cache_url": null, "name": null, "created": "2013-10-30T11:41:32.794061", "url": "http://url.invalid", "webstore_url": null, "last_modified": null, "position": 2, "revision_id": "902a635b-61cd-4229-b606-53692b1507ef", "resource_type": null}}
+
+# get metadata about file
+curl http://ckan.megginson.com/api/storage/metadata/2013-10-30T13%3A16%3A31.873Z/25000-invoices-jan-2012.csv
+
+0.5 SEEMS OPTIONAL) # get keyvalue for upload
+curl http://ckan.megginson.com/api/storage/auth/form/2013-10-30T13%3A16%3A31.874Z/25000-invoices-jan-2012.csv -H Authorization:$CKAN_APIKEY
+# {action:/storage/upload_handle, fields:[{name:key, value:2013-10-30T13:19:32.289Z/acled-morocco.xlsx}]}
+
+1) # upload the file
+curl http://ckan.megginson.com/storage/upload_handle -H Authorization:$CKAN_APIKEY --form file=@3.csv --form "key=2/345.csv" 
+
+# example resource info
+# #
+# 
+#
+# {"help": null, "success": true, "result": {
+# "resource_group_id": "96d02a95-2b37-4eb8-91ac-faf7f383d600", 
+# "cache_last_updated": null, 
+# "revision_timestamp": "2013-10-30T15:23:44.092561", 
+# "webstore_last_updated": null, 
+# "datastore_active": false, 
+# "id": "a786f3fc-1660-4037-af1c-af8e5f41b775", 
+# "size": null, 
+# "state": "active", 
+# "last_modified": null, 
+# "hash": "", 
+# "description": "description (in markdown)", 
+# "format": "format dropdown (eg csv)", 
+# "tracking_summary": {"total": 0, "recent": 0}, 
+# "mimetype_inner": null, 
+# "mimetype": null, 
+# "cache_url": null, 
+# "name": "Name (of resource)", 
+# "created": "2013-10-30T15:23:44.125391", 
+# "url": "http://Resource (url)", 
+# "webstore_url": null, 
+# "position": 12, 
+# "revision_id": "263b241c-179e-43ab-a85f-284d88f281e7", 
+# "resource_type": "file"}}
+#
+# {"help": null, "success": true, "result": {
+# "resource_group_id": "96d02a95-2b37-4eb8-91ac-faf7f383d600", 
+# "cache_last_updated": null, 
+# "revision_timestamp": "2013-10-30T15:23:44.092561", 
+# "webstore_last_updated": null, 
+# "datastore_active": false, 
+# "id": "a786f3fc-1660-4037-af1c-af8e5f41b775", 
+# "size": null, 
+# "state": "active", 
+# "last_modified": null, 
+# "hash": "", 
+# "description": "description (in markdown)", 
+# "format": "format dropdown (eg csv)", 
+# "tracking_summary": {"total": 0, "recent": 0}, 
+# "mimetype_inner": null, 
+# "mimetype": null, 
+# "cache_url": null, 
+# "name": "Name (of resource)", 
+# "created": "2013-10-30T15:23:44.125391", 
+# "url": "http://Resource (url)", 
+# "webstore_url": null, 
+# "position": 12, 
+# "revision_id": "263b241c-179e-43ab-a85f-284d88f281e7", 
+# "resource_type": "file"}}

@@ -1,0 +1,22 @@
+export DIRECTORY=$1
+export FILENAME=$2
+
+if [ "$FILENAME" == "" ]
+then
+    echo "usage: endtoend directory filename"
+    exit 1
+fi
+
+if [ "$FILENAME" == "endtoend" ]
+then
+    echo "nope"
+    exit 2
+fi
+
+echo "this, is, $DIRECTORY/$FILENAME" > $FILENAME
+
+curl $CKAN_INSTANCE/api/storage/auth/form/$DIRECTORY/$FILENAME -H Authorization:$CKAN_APIKEY > phase1
+
+curl $CKAN_INSTANCE/storage/upload_handle -H Authorization:$CKAN_APIKEY --form file=@$FILENAME --form "key=$DIRECTORY/$FILENAME" > phase2
+
+curl http://ckan.megginson.com/api/3/action/resource_create --data '{"package_id":"51b25ca0-9c2e-4e66-85e3-37a13c19a85d", "url":"'$CKAN_INSTANCE'/storage/f/'$DIRECTORY'/'$FILENAME'"}' -H Authorization:$CKAN_APIKEY > phase3
