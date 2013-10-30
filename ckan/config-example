@@ -1,0 +1,2 @@
+export CKAN_INSTANCE=http://ckan.megginson.com
+export CKAN_APIKEY=your-api-key-here
