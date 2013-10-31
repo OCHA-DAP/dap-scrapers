@@ -41,6 +41,7 @@ def chd_id_nomemo(text):
         return match.chd_code
     else:
         log.warn("No CHD code found for %r" % text)
+        return "_"+text
 
 chd_id = Memoize(chd_id_nomemo)
 

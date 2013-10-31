@@ -1,3 +1,4 @@
+from header import headerheader
 import requests
 import messytables
 import xypath
@@ -46,10 +47,10 @@ xy = xypath.Table.from_messy(mt)
 country_header = xy.filter("Afghanistan").assert_one().shift(y=-1).assert_one()
 year_header = xy.filter("2011").assert_one()
 
-big = {'region': country_header.headerheader(xypath.DOWN, xypath.RIGHT),
+big = {'region': headerheader(country_header, xypath.DOWN, xypath.RIGHT),
        'period': {'2011': year_header.fill(xypath.DOWN)}}
 
-for olap_row in xy.xyzzy(big, valuename="value"):
+for olap_row in xypath.xyzzy.xyzzy(xy, big, valuename="value"):
     full_olap = dict(value_template)
     full_olap.update(olap_row)
     orm.Value(**full_olap).save()

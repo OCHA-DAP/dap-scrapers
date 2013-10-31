@@ -2,11 +2,12 @@ import dl
 import messytables
 import xypath
 import orm
-
+from header import headerheader
 """Value: dsID, region, indID, period, value, source, is_number
    DataSet: dsID, last_updated, last_scraped, name
    Indicator: indID, name, units
    """
+
 
 baseurl = 'http://ec.europa.eu/echo/files/policies/strategy/gna_2012_2013.xls'
 
@@ -41,11 +42,13 @@ countries = xy.filter("ISO3").assert_one().fill(xypath.DOWN)
 vuln_h = xy.filter("GNA Vulnerability Index (VI)").assert_one()
 crisis_h = xy.filter("GNA Crisis Index (CI)").assert_one()
 
-big = {'region': xy.filter("ISO3").assert_one().headerheader(xypath.DOWN, xypath.RIGHT),
+headerheader(xy.filter("ISO3").assert_one(), xypath.DOWN, xypath.RIGHT)
+
+big = {'region': headerheader(xy.filter("ISO3").assert_one(), xypath.DOWN, xypath.RIGHT),
        'indID': {'gna-vi': vuln_h.fill(xypath.DOWN),
                      'gna-ci': crisis_h.fill(xypath.DOWN)}}
 
-for olap_row in xy.xyzzy(big, valuename="value"):
+for olap_row in xypath.xyzzy.xyzzy(xy, big, valuename="value"):
     print olap_row
     full_olap = dict(value_template)
     full_olap.update(olap_row)
