@@ -11,16 +11,16 @@ do
     if [ $EXIT != "0" ]
         then
             STATUS="error"
-            MSG=$PYFILE $MSG
+            MSG=$PYFILE:$MSG
     fi
 done
 
 # todo: upload to CKAN
 
-if [ $STATUS == "0" ]
+if [ $STATUS == "ok" ]
     then
         MSG=
-
+fi
 curl https://scraperwiki.com/api/status --data "type=$STATUS&message=$MSG"
 
 
