@@ -11,18 +11,21 @@ import datetime
 import lxml.html
 import json
 
-def get_parameters():
+
+def get_parameters(filepath=None):
     params = {}
     params['CKAN_INSTANCE'] = os.getenv("CKAN_INSTANCE")
     params['CKAN_APIKEY'] = os.getenv("CKAN_APIKEY")
     if not params['CKAN_INSTANCE'] or not params['CKAN_APIKEY']:
         raise RuntimeError("Enviroment variables CKAN_INSTANCE / CKAN_APIKEY not set.")
 
-    if len(sys.argv) != 2:
-        raise RuntimeError("Takes one argument: filename")
-    else:
-        params['FILEPATH'] = sys.argv[1]
-        params['FILENAME'] = os.path.basename(params['FILEPATH'])
+    if filepath is None:
+        if len(sys.argv) != 2:
+            raise RuntimeError("Takes one argument: filename")
+        else:
+            filepath = sys.argv[1]
+    params['FILEPATH'] = filepath
+    params['FILENAME'] = os.path.basename(params['FILEPATH'])
 
     params['NOW'] = datetime.datetime.now().isoformat()
     params['DIRECTORY'] = params['NOW'].replace(":", "").replace("-", "")
@@ -68,26 +71,33 @@ def create_resource(url, **kwargs):  # phase 3
     print response.content
 
 
-params = get_parameters()
-headers = {"Authorization": params['CKAN_APIKEY']}
-resource_info = {
-    "revision_id": params['NOW'],
-    "description": "Indicators scraped from a variety of sources by ScraperWiki",
-    "format": "Zipped CSV",
-    # "hash": None,
-    "name": "scraped.csv.zip",
-    # "resource_type": None,
-    "mimetype": "application/zip",
-    "mimetype_inner": "text/csv",
-    # "webstore_url": None,
-    # "cache_url": None,
-    # "size": None,
-    "created": params['NOW'],
-    "last_modified": params['NOW'],
-    # "cache_last_updated": None,
-    # "webstore_last_updated": None,
-    }
+def upload(resource_info=None, filename=None):
+    global params
+    global headers
+    params = get_parameters(filename)
+    headers = {"Authorization": params['CKAN_APIKEY']}
+    if resource_info is None:
+        print "No resource_info specified, using defaults"
+        resource_info = {
+            "package_id": "51b25ca0-9c2e-4e66-85e3-37a13c19a85d",
+            "revision_id": params['NOW'],
+            "description": "Indicators scraped from a variety of sources by ScraperWiki",
+            "format": "Zipped CSV",
+            # "hash": None,
+            "name": "scraped.csv.zip",
+            # "resource_type": None,
+            "mimetype": "application/zip",
+            "mimetype_inner": "text/csv",
+            # "webstore_url": None,
+            # "cache_url": None,
+            # "size": None,
+            "created": params['NOW'],
+            "last_modified": params['NOW'],
+            # "cache_last_updated": None,
+            # "webstore_last_updated": None,
+            }
+    j = request_permission()
+    url = upload_file(j)
+    create_resource(url, **resource_info)
 
-j = request_permission()
-url = upload_file(j)
-create_resource(url, **resource_info)
+if __name__=="__main__": upload()
