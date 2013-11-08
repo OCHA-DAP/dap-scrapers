@@ -24,11 +24,9 @@ def get_parameters():
         params['FILEPATH'] = sys.argv[1]
         params['FILENAME'] = os.path.basename(params['FILEPATH'])
 
-    params['DIRECTORY'] = datetime.datetime.now().isoformat().replace(":", "").replace("-", "")
+    params['NOW'] = datetime.datetime.now().isoformat()
+    params['DIRECTORY'] = params['NOW'].replace(":", "").replace("-", "")
     return params
-
-params = get_parameters()
-headers = {"Authorization": params['CKAN_APIKEY']}
 
 def request_permission():  # phase1
     response = requests.get("{CKAN_INSTANCE}/api/storage/auth/form/{DIRECTORY}/{FILENAME}".format(**params), headers=headers)
@@ -66,9 +64,30 @@ def create_resource(url, **kwargs):  # phase 3
                              data=json.dumps(data)
                              )
     #response.raise_for_status()
-    #assert response.json()["success"]
+    assert response.json()["success"]
     print response.content
+
+
+params = get_parameters()
+headers = {"Authorization": params['CKAN_APIKEY']}
+resource_info = {
+    "revision_id": params['NOW'],
+    "description": "Indicators scraped from a variety of sources by ScraperWiki",
+    "format": "Zipped CSV",
+    # "hash": None,
+    "name": "scraped.csv.zip",
+    # "resource_type": None,
+    "mimetype": "application/zip",
+    "mimetype_inner": "text/csv",
+    # "webstore_url": None,
+    # "cache_url": None,
+    # "size": None,
+    "created": params['NOW'],
+    "last_modified": params['NOW'],
+    # "cache_last_updated": None,
+    # "webstore_last_updated": None,
+    }
 
 j = request_permission()
 url = upload_file(j)
-create_resource(url)
+create_resource(url, **resource_info)
