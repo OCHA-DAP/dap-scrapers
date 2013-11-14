@@ -97,10 +97,12 @@ for country in country_urls():
     for item in data:
         value_data = dict(value_static)
         value_data['indID'] = 'unterm:' + item
-        value_data['value'] = data[item]
+        value_data['value'] = data[item].encode('latin1').decode('utf-8')
         value_data['region'] = data['ISO Country alpha-3-code']
         value_data['source'] = country
         if value_data['value']:
             Value(**value_data).save()
+        if value_data['indID'] == 'unterm:Currency Abbr.':
+            print value_data['value'], repr(value_data['value'])
     assert len(data) == len(indicators)
 session.commit()
