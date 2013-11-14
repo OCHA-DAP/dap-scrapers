@@ -1,3 +1,4 @@
+import datetime
 import lxml.html
 import requests
 import xypath
@@ -100,6 +101,7 @@ for country in country_urls():
         value_data['value'] = data[item].encode('latin1').decode('utf-8')
         value_data['region'] = data['ISO Country alpha-3-code']
         value_data['source'] = country
+        value_data['period'] = datetime.datetime.now().isoformat()[:10]
         if value_data['value']:
             Value(**value_data).save()
         if value_data['indID'] == 'unterm:Currency Abbr.':
