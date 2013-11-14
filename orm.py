@@ -49,6 +49,7 @@ class Value(Base):
             return
         if self.period is None or self.period == '':
             self.period = now()[:10]  # YYYY-MM-DD
+        self.is_number=bool(self.is_number)
         if self.is_number:
             self.value = canon_number(self.value)
             if self.value is None:
