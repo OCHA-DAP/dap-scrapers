@@ -47,6 +47,8 @@ class Value(Base):
         self.indID = chd_id(self.indID)
         if self.region is None:
             return
+        if self.period is None or self.period == '':
+            self.period = now()[:10]  # YYYY-MM-DD
         if self.is_number:
             self.value = canon_number(self.value)
             if self.value is None:
