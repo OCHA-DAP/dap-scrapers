@@ -43,13 +43,15 @@ def do_indicator(ind="566"):
     years = country_anchor.fill(xypath.RIGHT).filter(re.compile("\d\d\d\d"))
     countries = country_anchor.fill(xypath.DOWN)
     indicator = table.filter("Series").shift(xypath.DOWN).value
-    if ',' in indicator:
-        i_name = ', '.join(indicator.split(', ')[:-1])
-        i_unit = indicator.split(', ')[-1]
+    SEPARATOR = ', '
+    if SEPARATOR in indicator:
+        i_name = SEPARATOR.join(indicator.split(SEPARATOR)[:-1])
+        i_unit = indicator.split(SEPARATOR)[-1]
     else:
         i_name = indicator
         i_unit = ''
     value_template['indID'] = indicator
+    assert i_name
     indicator = {'indID': indicator,
                  'name': i_name,
                  'units': i_unit}
