@@ -1,7 +1,7 @@
 import requests
 import StringIO
 
-cache = True
+cache = False
 if cache:
     import requests_cache
     requests_cache.install_cache("cache")
