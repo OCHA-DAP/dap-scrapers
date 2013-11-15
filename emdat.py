@@ -18,7 +18,9 @@ def doit(url, targets, names, num_years=10):
     table = xypath.Table.from_messy(mt)
     nowyear = str(datetime.datetime.now().year)
     minyear = str(datetime.datetime.now().year - num_years)
-    country_cells = table.filter('iso').assert_one().fill(xypath.DOWN)
+    # country_cells: we used to assert_one(), but sometimes there's two!
+    country_cells = table.filter('iso').fill(xypath.DOWN)
+    country_cells = country_cells - country_cells.filter('iso')  # remove other
     country_year_filter = country_cells.filter(lambda b: b.shift(xypath.RIGHT).value >= minyear
                                                      and b.shift(xypath.RIGHT).value != nowyear)
     target_cells = table.filter(lambda b: b.value in targets)
