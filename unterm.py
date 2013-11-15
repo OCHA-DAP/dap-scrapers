@@ -104,7 +104,5 @@ for country in country_urls():
         value_data['period'] = datetime.datetime.now().isoformat()[:10]
         if value_data['value']:
             Value(**value_data).save()
-        if value_data['indID'] == 'unterm:Currency Abbr.':
-            print value_data['value'], repr(value_data['value'])
     assert len(data) == len(indicators)
 session.commit()
