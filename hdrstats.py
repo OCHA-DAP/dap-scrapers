@@ -72,6 +72,7 @@ def getindicator(ind="100106", overridefunction=None):
     except ValueError:
         indicator_split = [indicator_text, ""]
     indicator['name'], indicator['units'] = indicator_split
+    indicator['name'] = indicator['name'].strip()
     access_text, = [x.tail.strip() for x in root.xpath("//br") if str(x.tail) != "None" and x.tail.strip()]
     access_date_raw, = re.findall('Accessed:(.*)from', access_text)
     dataset['last_updated'] = dateutil.parser.parse(access_date_raw).isoformat()
