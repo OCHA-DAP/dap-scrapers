@@ -21,7 +21,24 @@ http://esa.un.org/unpd/wpp/Excel-Data/EXCEL_FILES/1_Population/WPP2012_POP_F05_M
 http://esa.un.org/unpd/wpp/Excel-Data/EXCEL_FILES/1_Population/WPP2012_POP_F06_POPULATION_DENSITY.XLS
 """.strip().split('\n')
 
-
+def parse_file_string(filestring):
+    """
+    >>> parse_file_line("File 123: ABC (X, Y) Z")
+    ('ABC (X, Y) Z', '')
+    >>> parse_file_line("File 123: ABC (X) Y (Z)")
+    ('ABC (X) Y', 'Z')
+    >>> parse_file_line("File: ABC")
+    ('ABC', '')
+    """
+    if filestring.strip()[-1] != ")":
+        return (filestring.strip(), "")
+    rhs = filestring.partition(":")[2]
+    chunks = rhs.split('(')
+    indname = '('.join(chunks[:-1])
+    units = chunks[-1].replace(')','')
+    return indname.strip(), units.strip()
+    
+   
 for sheet in spreadsheets:
     shortname = sheet.split('/')[-1].split('.')[0]
     dsID = 'esa-unpd-' + shortname.replace('_', '-').split('-')[0]
@@ -36,7 +53,8 @@ for sheet in spreadsheets:
                  "name": shortname,
                  "units": ''
                 }
-    orm.Indicator(**indicator).save()
+    # we replace the indicator name, so not saving now.
+    # orm.Indicator(**indicator).save()
     value_template = {"dsID": dsID,
                       "is_number": True,
                       "source": sheet}
@@ -49,6 +67,11 @@ for sheet in spreadsheets:
     else:
         mt = mtables['PROPORTION-URBAN']
     table = xypath.Table.from_messy(mt)
+
+    filestring = table.filter(re.compile("File[^:]*:.*")).assert_one().value
+    indicator['name'], indicator['units'] = parse_file_string(filestring)
+    orm.Indicator(**indicator).save()
+
     region_header = table.filter(re.compile("Major area, region, country or area.*")).assert_one()
     ccode_header = table.filter(re.compile("Country.code")).assert_one()
     regions = region_header.fill(xypath.DOWN)
