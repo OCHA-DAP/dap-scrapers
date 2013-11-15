@@ -1,3 +1,4 @@
+import re
 import xypath
 import messytables
 import dl
@@ -28,12 +29,25 @@ orm.Indicator(**indicator).save()
 def niceyear(s):
     return s.partition("-")[0] + "/P3Y"
 
+def discover_table(all_tables):
+    found = []
+    for table in all_tables.tables:
+        t = xypath.Table.from_messy(table)
+        if t.filter(re.compile(".*Prevalence of Undernourishment.*")).filter(lambda cell: cell.y==0) \
+            and t.filter(lambda cell: cell.x==7 and cell.value):
+            found.append(t)
+    if len(found) != 1:
+        print found
+        print len(found), "found"
+        raise RuntimeError
+    return found[0]
+
+
 
 def do_file(url="http://bit.ly/14FRxGV"):
     fh = dl.grab(url)
     mts = messytables.excel.XLSTableSet(fh)
-    v12 = mts['V12']
-    xy = xypath.Table.from_messy(v12)
+    xy = discover_table(mts)
     print "...got"
     home = xy.filter("(home)")
     years = home.fill(xypath.RIGHT)
