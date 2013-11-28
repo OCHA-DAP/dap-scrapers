@@ -1,7 +1,13 @@
 #!/bin/bash -xe
+DATESTAMP=`date --iso`
+VERSION=v1
 cd http
 rm -f archive.sql csv.zip dataset.csv indicator.csv value.csv sql.zip all.zip
 cat ../archive.sql | sqlite3 ../ocha.db
 zip csv.zip dataset.csv indicator.csv value.csv
-zip sql.zip all.sql
+zip sql.zip ocha.db
+mkdir -p $VERSION
+echo $DATESTAMP > v1/DATESTAMP
+mv *.csv $VERSION
+mv *.zip $VERSION
 echo "all ok"
