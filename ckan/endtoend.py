@@ -11,6 +11,21 @@ import datetime
 import lxml.html
 import json
 
+def do(f, args=[], kwargs={}):
+    while True:
+        try:
+            x=f(*args, **kwargs)
+            return x
+        except Exception, e:
+            print "EXCEPTION: ",e
+            pass
+
+def raise_for_status(response):
+    try:
+        response.raise_for_status()
+    except:
+        print "FAILED RFS: %r" % response.content
+        raise
 
 def get_parameters(filepath=None):
     params = {}
@@ -67,7 +82,11 @@ def create_resource(url, **kwargs):  # phase 3
                              data=json.dumps(data)
                              )
     #response.raise_for_status()
-    assert response.json()["success"]
+    try:
+        assert response.json()["success"]
+    except:
+        print "FAILED: %r" % response.content
+        raise
     print response.content
 
 
@@ -96,8 +115,8 @@ def upload(resource_info=None, filename=None):
             # "cache_last_updated": None,
             # "webstore_last_updated": None,
             }
-    j = request_permission()
-    url = upload_file(j)
-    create_resource(url, **resource_info)
+    j = do(request_permission)
+    url = do(upload_file, [j])
+    do(create_resource, [url], resource_info)
 
 if __name__=="__main__": upload()
