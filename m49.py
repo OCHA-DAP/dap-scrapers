@@ -67,7 +67,6 @@ for messy in mt_prune:
                   'source': 'http://unstats.un.org/unsd/methods/m49/m49alpha.htm',
                   'is_number': False}
     builder = []
-    print alphas
     for entry in alphas:
         v = dict(v_template)
         v.update({'value': entry[0], 'region': entry[1], 'indID': 'm49-name'})
