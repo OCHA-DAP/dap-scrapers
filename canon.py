@@ -37,8 +37,9 @@ def chd_id_nomemo(text):
     """conceptually very similar to canon, but for Common Humanitarian Dataset IDs.
        Features significantly less faff due to relying on exact string match."""
     match = chd.find_one(sw_name=text)
+    print type(match)
     if match:
-        return match.chd_code
+        return match['chd_code']
     else:
         log.warn("No CHD code found for %r" % text)
         return "_"+text
@@ -58,7 +59,7 @@ def country_id_nomemo(rawname):
         if not nicename:
             log.warn("Name %r (%r) not found." % (rawname, name))
             return None
-    return nicename.code
+    return nicename['code']
 
 canonicalise = Memoize(country_id_nomemo)
 
