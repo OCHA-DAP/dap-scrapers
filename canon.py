@@ -37,7 +37,6 @@ def chd_id_nomemo(text):
     """conceptually very similar to canon, but for Common Humanitarian Dataset IDs.
        Features significantly less faff due to relying on exact string match."""
     match = chd.find_one(sw_name=text)
-    print type(match)
     if match:
         return match['chd_code']
     else:
