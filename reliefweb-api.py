@@ -72,7 +72,7 @@ def get_job_query(COUNTRY):
                                    'value': COUNTRY
                                   },
                                   {'field': 'date.closed',
-                                   'value': {'from': FROM, 'to': TO
+                                   'value': {'from': FROM, 'to': TO}
                                   }
                               ]
                           }
