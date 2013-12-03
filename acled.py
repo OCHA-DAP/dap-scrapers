@@ -11,6 +11,10 @@ import orm
    Indicator: indID, name, units
    """
 
+NONVIOLENT = ['Headquarters or base established',
+              'Non-violent activity by a conflict actor',
+              'Non-violent transfer of territory']
+
 dataset = {'dsID': 'acled',
            'last_updated': None,
            'last_scraped': orm.now()}
@@ -46,6 +50,10 @@ def keyfunc(item):
 events = []
 for url in geturls():
     for row in parsesheet(url):
+        if row['EVENT_TYPE'].strip() in NONVIOLENT:
+            print row['EVENT_TYPE'] ## TODO: not working!!!!
+            continue
+        exit()
         events.append(row)
 sorted_e = sorted(events, key=keyfunc)
 
