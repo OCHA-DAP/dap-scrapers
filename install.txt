@@ -1,8 +1,7 @@
 # How to install:
 
 # Get prerequisites:
->>> sudo apt-get install python-dev libxml2-dev libxslt1-dev python-pip git sqlite3 curl
-# (For pip, lxml and git clone, sqlite and curl) 
+>>> sudo apt-get install python-dev libxml2-dev libxslt1-dev python-pip git sqlite3 curl zip
 >>> sudo pip install virtualenv
 
 # Get repo
