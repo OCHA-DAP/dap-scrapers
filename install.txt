@@ -1,1 +1,15 @@
-apt-get install python-dev libxml2-dev libxslt1-dev python-pip git
+# How to install:
+
+# Get prerequisites:
+>>> sudo apt-get install python-dev libxml2-dev libxslt1-dev python-pip git sqlite3 curl
+# (For pip, lxml and git clone, sqlite and curl) 
+>>> sudo pip install virtualenv
+
+# Get repo
+>>> git clone https://github.com/OCHA-DAP/dap-scrapers
+>>> virtualenv venv
+>>> . venv/bin/activate
+>>> cd dap-scrapers
+>>> pip install -r requirements.txt
+
+### SAVE POINT v2
