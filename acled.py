@@ -16,6 +16,7 @@ NONVIOLENT = ['Headquarters or base established',
               'Non-violent transfer of territory']
 
 dataset = {'dsID': 'acled',
+           'name': 'ACLED (Armed conflict location and event dataset)',
            'last_updated': None,
            'last_scraped': orm.now()}
 

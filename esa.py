@@ -23,15 +23,17 @@ http://esa.un.org/unpd/wpp/Excel-Data/EXCEL_FILES/1_Population/WPP2012_POP_F06_P
 
 def parse_file_string(filestring):
     """
-    >>> parse_file_line("File 123: ABC (X, Y) Z")
+    >>> parse_file_string("File 123: ABC (X, Y) Z")
     ('ABC (X, Y) Z', '')
-    >>> parse_file_line("File 123: ABC (X) Y (Z)")
+    >>> parse_file_string("File 123: ABC (X) Y (Z)")
     ('ABC (X) Y', 'Z')
-    >>> parse_file_line("File: ABC")
+    >>> parse_file_string("File: ABC")
     ('ABC', '')
+    >>> parse_file_string("File 2: A, B, 1-2")
+    ('A, B, 1-2', '')
     """
     if filestring.strip()[-1] != ")":
-        return (filestring.strip(), "")
+        filestring=filestring.strip()+"()"
     rhs = filestring.partition(":")[2]
     chunks = rhs.split('(')
     indname = '('.join(chunks[:-1])
@@ -39,7 +41,8 @@ def parse_file_string(filestring):
     return indname.strip(), units.strip()
     
    
-for sheet in spreadsheets:
+def main():
+  for sheet in spreadsheets:
     shortname = sheet.split('/')[-1].split('.')[0]
     dsID = 'esa-unpd-' + shortname.replace('_', '-').split('-')[0]
     year_text, = re.findall('\d{4}', dsID)
@@ -70,6 +73,7 @@ for sheet in spreadsheets:
 
     filestring = table.filter(re.compile("File[^:]*:.*")).assert_one().value
     indicator['name'], indicator['units'] = parse_file_string(filestring)
+    print indicator['name']
     orm.Indicator(**indicator).save()
 
     region_header = table.filter(re.compile("Major area, region, country or area.*")).assert_one()
@@ -89,5 +93,8 @@ for sheet in spreadsheets:
         value['period'] = year_value
         value['value'] = value_cell.value
         orm.Value(**value).save()
-        print value
-orm.session.commit()
+        #print value
+  orm.session.commit()
+
+if __name__=="__main__":
+    main()
