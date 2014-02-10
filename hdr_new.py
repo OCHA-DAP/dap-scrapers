@@ -3,7 +3,6 @@ import datetime
 import requests
 from orm import session, Value, DataSet, Indicator
 import orm
-from esa import parse_file_string
 """Value: dsID, region, indID, period, value, source, is_number
    DataSet: dsID, last_updated, last_scraped, name
    Indicator: indID, name, units
@@ -12,8 +11,8 @@ from esa import parse_file_string
 dsID = "data.undp.org"
 
 dataset = {"dsID": dsID,
-           "last_updated": None  # max(pubdate)
-           "last_scraped": orm.now()
+           "last_updated": None,  # TODO max(pubdate)
+           "last_scraped": orm.now(), 
            "name": "UNDP Open Data"}
 
 metadata_url = "https://data.undp.org/api/views/{}/rows.json?accessType=DOWNLOAD"
@@ -32,9 +31,36 @@ lookup = {"u2dx-y6wx": "PSE110",  # GNI per capita in PPP terms (constant 2005 i
          # "=========": "PVX070",  # Impact of natural disasters: population affected
          }
 
+
+def parse_file_string(filestring):
+    """
+    >>> parse_file_string("File 123: ABC (X, Y) Z")
+    ('ABC (X, Y) Z', '')
+    >>> parse_file_string("File 123: ABC (X) Y (Z)")
+    ('ABC (X) Y', 'Z')
+    >>> parse_file_string("File: ABC")
+    ('ABC', '')
+    >>> parse_file_string("File 2: A, B, 1-2")
+    ('A, B, 1-2', '')
+    """
+    if filestring.strip()[-1] != ")":
+        filestring=filestring.strip()+"()"
+    if ':' in filestring:
+        rhs = filestring.partition(":")[2]
+    else:
+        rhs = filestring
+    chunks = rhs.split('(')
+    indname = '('.join(chunks[:-1])
+    units = chunks[-1].replace(')','')
+    return indname.strip(), units.strip()
+
+
 def get_metadata(socrata_id):
     url = metadata_url.format(socrata_id)
     tree = requests.get(url).json()
+    return parse_metadata(socrata_id, tree)
+
+def parse_metadata(socrata_id, tree):
     #return {'name': tree['meta']['view']['name'],
     #        'attribution': tree['meta']['view']['attribution'],
     #        'description': tree['meta']['view']['description'],
@@ -44,14 +70,17 @@ def get_metadata(socrata_id):
     #       }
     raw_name = tree['meta']['view']['name']
     justname, units = parse_file_string(raw_name)
-    
-    return {"indID": lookup(socrata_id),
-            "name": justname,
+
+    return {"indID": lookup[socrata_id],
+            "name": justname,  # TODO failing
             "units": units}
             
 def get_numbers(socrata_id):
     url = data_url.format(socrata_id)
     countries = requests.get(url).json()
+    return parse_numbers(socrata_id, countries)
+
+def parse_numbers(socrata_id, countries):
     for country in countries:
         for key in country:
 	    if re.match(r"_(?:19|20\d\d)", key):
@@ -60,11 +89,13 @@ def get_numbers(socrata_id):
 		       "period": int(key[1:]),
 		       "value": float(country[key]),
                        "indID": lookup[socrata_id],
-                       "source": url,
+                       "source": data_url.format(socrata_id),
                        "is_number": True}
                            
+DataSet(**dataset).save()
+maxdate=None
 for socrata_code in lookup:
-    print get_metadata(socrata_code)['name']
-    print list(get_numbers(socrata_code))
-    #print
-
+    ind = get_metadata(socrata_code)
+    Indicator(**ind).save()
+    for value in get_numbers(socrata_code):
+        Value(**value).save()
