@@ -91,6 +91,24 @@ def parse_numbers(socrata_id, countries):
                        "indID": lookup[socrata_id],
                        "source": data_url.format(socrata_id),
                        "is_number": True}
+
+def get_rank(socrata_id):
+    url = data_url.format(socrata_id)
+    countries = requests.get(url).json()
+    return parse_rank(socrata_id, countries)
+    
+
+def parse_rank(socrata_id, countries):
+    for country in countries:
+        if 'hdi_rank' in country:
+	    yield {"dsID": dsID,
+		   "region": country['country'],
+		   "period": 2012,  # TODO
+		   "value": int(country['hdi_rank']),
+		   "indID": "PSE220",
+		   "source": data_url.format(socrata_id),
+		   "is_number": True}
+		   
                            
 DataSet(**dataset).save()
 maxdate=None
@@ -99,3 +117,13 @@ for socrata_code in lookup:
     Indicator(**ind).save()
     for value in get_numbers(socrata_code):
         Value(**value).save()
+
+print "rank"
+ind = {"indID": "PSE220",
+       "name": "HDI Rank",
+       "units": "rank"}
+Indicator(**ind).save()
+for rank in get_rank("u2dx-y6wx"):
+    Value(**rank).save()
+
+
