@@ -41,6 +41,10 @@ value_template = {"dsID": "hdi-disaster",
                   "is_number": True}
 
 fh = StringIO.StringIO(html)
+print fh.read()
+exit(3)
+
+
 mt = messytables.html.HTMLTableSet(fh).tables[0]
 xy = xypath.Table.from_messy(mt)
 

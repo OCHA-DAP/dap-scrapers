@@ -59,6 +59,8 @@ def getindicator(ind="100106", overridefunction=None):
                      'units': ''}
     Indicator(**hdi_indicator).save()
     DataSet(**dataset).save()
+    print html
+    exit(3)
     htmlio = StringIO.StringIO(html)
     messy = messytables.html.HTMLTableSet(htmlio)
     table = xypath.Table.from_messy(list(messy.tables)[0])
