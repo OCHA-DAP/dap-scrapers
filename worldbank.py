@@ -4,6 +4,7 @@ from hamcrest import equal_to, is_in
 from orm import session, Value, DataSet, Indicator
 import orm
 import re
+import time
 import dl
 
 indicator_list = """
@@ -66,10 +67,17 @@ def getcountry(threeletter="PAK"):
              'source': baseurl % threeletter,
              'is_number': True}
 
-    fh = dl.grab(baseurl % threeletter, [404])
-    if not fh:
-        return
-    messy = messytables.excel.XLSTableSet(fh)
+    while True:
+        fh = dl.grab(baseurl % threeletter, [404])
+        if not fh:
+            return
+        try:
+            messy = messytables.excel.XLSTableSet(fh)
+            break  # success!
+        except messytables.error.ReadError, e:
+            print e
+            time.sleep(500)
+            
     table = xypath.Table.from_messy(list(messy.tables)[0])
     indicators = table.filter(is_in(indicator_list))
     indname = indicators.shift(x=-1)
@@ -101,4 +109,8 @@ def getcountry(threeletter="PAK"):
     session.commit()
 
 for country in getcountrylist():
-    getcountry(country)
+    try:
+        getcountry(country)
+    except Exception, e:
+        print country, e
+        raise
