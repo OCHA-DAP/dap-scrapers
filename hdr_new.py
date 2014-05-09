@@ -26,6 +26,8 @@ lookup = {"u2dx-y6wx": "PSE110",  # GNI per capita in PPP terms (constant 2005 i
           "bh77-rzbn": "HDR:68606",  # GII: Gender Inequality Index, value
           "qnam-f624": "PVE030",  # Expected Year of Schooling (of children)
           "4gkx-mq89": "PVH180",  # Maternal mortality ratio
+          "x22y-8m6h": "PVE040",  # Adult literacy rate, both sexes (% aged 15 and above)
+
          # "---------": "------",  # Impact of natural disasters: number of deaths
          # "XXXXXXXXX": "PSE220",  # Human Development Index rank (in all of them)
          # "=========": "PVX070",  # Impact of natural disasters: population affected
