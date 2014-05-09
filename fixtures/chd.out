@@ -71,8 +71,10 @@ HDI:98606|PVX060
 m49-name|_m49-name
 m49-num|CG060
 Fixed telephone lines per 100 inhabitants|PCX080
+Fixed-telephone subscriptions per 100 inhabitants|PCX080
 Internet users per 100 population|PCX070
 Mobile cellular subscriptions per 100 inhabitants|PCX051
+Mobile-cellular subscriptions per 100 inhabitants|PCX051
 Proportion of the population using improved drinking water sources, total|PVW010
 Proportion of the population using improved sanitation facilities, total|PVW040
 Total net enrolment ratio in primary education, both sexes|PVE130
