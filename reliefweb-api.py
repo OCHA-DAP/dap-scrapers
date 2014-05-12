@@ -138,3 +138,4 @@ def do_jobs():
 
 # do_jobs()
 do_products()
+orm.session.commit()
