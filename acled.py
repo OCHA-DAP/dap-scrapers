@@ -38,27 +38,36 @@ def parsesheet(url):
         yield OrderedDict(list(zip(headers, [x.value for x in row])))
 
 
-def geturls(baseurl='http://www.acleddata.com/data/types-and-groups/'):
+def geturls(baseurl='http://www.acleddata.com/data/conflict-by-type-and-actor/'):
     html = requests.get(baseurl).content
+    print html
     root = lxml.html.fromstring(html)
     root.make_links_absolute(baseurl)
-    return root.xpath("//div[@id='content']//article//a[contains(text(),'xls')]/@href")
-
+    links = root.xpath("//div[@id='content']//article//a[contains(text(),'xls')]/@href")
+    assert links
+    print links
+    return links
 
 def keyfunc(item):
     return (item['YEAR'], item['COUNTRY'])
 
 events = []
 for url in geturls():
-    for row in parsesheet(url):
+    print url
+    _parsesheet = list(parsesheet(url))
+    print len(_parsesheet)
+    for row in _parsesheet:
         if row['EVENT_TYPE'].strip() in NONVIOLENT:
             print row['EVENT_TYPE'] ## TODO: not working!!!!
             continue
-        exit()
         events.append(row)
+    print "E", len(events)
 sorted_e = sorted(events, key=keyfunc)
 
+print "HERE"
+
 for item in itertools.groupby(sorted_e, keyfunc):
+    print "item"
     value_item = {'dsID': 'acled',
                   'indID': 'PVX040',
                   'period': item[0][0],
