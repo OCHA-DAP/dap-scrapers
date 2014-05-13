@@ -10,6 +10,7 @@ import orm
    """
 
 indicators = ["566",  # population undernourished, percentage
+              "557",  # percentage of seats held by women in national parl.
               "563",  # inverse of infants lacking measles immunization
               "665",  # improved water
               "668",  # improved sanitation
