@@ -291,3 +291,20 @@ MALARIA003|TT011
 MALARIA001|TT010
 MALARIA002|TT009
 WHS3_48|TT008
+Access to electricity (% of population)|PCX140
+Children 1 year old immunized against measles, percentage|PCH100
+emdat:no_homeless|PVX080
+emdat:no_injured|PVX090
+emdat:total_affected|PVX100
+GNI, PPP (current international $)|PSE230
+HDR:68606|PSE240
+International migrant stock (% of population)|TT027T
+Land area (sq. km)|CG300
+m49-name|CG310
+Net ODA received per capita (current US$)|PSE250
+Number of infant deaths|PCH110
+Population undernourished, millions|PVN060
+Population undernourished, percentage|PVN070
+Population, total|PSP120
+unterm:ISO Country alpha-2-code|CG320
+WPP2012_MORT_F02_CRUDE_DEATH_RATE|PVH200
