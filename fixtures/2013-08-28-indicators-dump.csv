@@ -1,0 +1,212 @@
+indID,dsID,indName,dsName, CHDCode,Min,max
+HDR:100106,HDRStats, GNI per capita in PPP terms (constant 2005 international $) ,"Human Development Indicators, UNDP",PSE110,0,
+HDR:103006,HDRStats, Mean years of schooling (of adults) ,"Human Development Indicators, UNDP",PVE110,0,
+HDR:105906,HDRStats, Combined gross enrolment in education (both sexes) ,"Human Development Indicators, UNDP",PVE120,0,
+HDR:38006,HDRStats, Public expenditure on education (% of GDP) ,"Human Development Indicators, UNDP",PVE010,0,100
+HDR:57506,HDRStats, Under-five mortality ,"Human Development Indicators, UNDP",PVH120,0,
+HDR:68606,HDRStats," GII: Gender Inequality Index, value ","Human Development Indicators, UNDP",DNA,0,1
+HDR:69706,HDRStats, Expected Years of Schooling (of children) ,"Human Development Indicators, UNDP",PVE030,0,
+HDR:89006,HDRStats, Maternal mortality ratio ,"Human Development Indicators, UNDP",PVH180,0,
+HDR:98706,HDRStats, Impact of natural disasters: population affected (average per year/million) ,"Human Development Indicators, UNDP",PVX070,0,
+HDR:HDI Rank,HDRStats,Human Development Index rank,"Human Development Indicators, UNDP",PSE220,0,
+HDR:101406,HDRStats," Adult literacy rate, both sexes ","Human Development Indicators, UNDP",PVE040,0,100
+HDR:38906,HDRStats, MPI: Population living below $1.25 PPP per day ,"Human Development Indicators, UNDP",PSE160,0,
+"Age dependency ratio, old (% of working-age population)",World Bank,"Age dependency ratio, old ",World Bank,PSE140,0,
+"Age dependency ratio, young (% of working-age population)",World Bank,"Age dependency ratio, young ",World Bank,PSE150,0,
+GNI (current US$),World Bank,GNI ,World Bank,PSE120,0,
+"Inflation, consumer prices (annual %)",World Bank,"Inflation, consumer prices ",World Bank,PSE200,,
+International migrant stock (% of population),World Bank,International migrant stock ,World Bank,DNA,0,100
+Internet users (per 100 people),World Bank,Internet users ,World Bank,PCX100,0,100
+Land area (sq. km),World Bank,Land area ,World Bank,DNA,0,
+Mobile cellular subscriptions (per 100 people),World Bank,Mobile cellular subscriptions ,World Bank,PCX090,0,
+"Mortality rate, adult, female (per 1,000 female adults)",World Bank,"Mortality rate, adult, female ",World Bank,PVH080,0,1000
+"Mortality rate, adult, male (per 1,000 male adults)",World Bank,"Mortality rate, adult, male ",World Bank,PVH090,0,1000
+Net ODA received per capita (current US$),World Bank,Net ODA received per capita ,World Bank,DNA,0,
+Population density (people per sq. km of land area),World Bank,Population density ,World Bank,PSP090,0,
+Population growth (annual %),World Bank,Population growth ,World Bank,PSP060,,
+"Population, total",World Bank,"Population, total",World Bank,DNA,0,
+Access to electricity (% of population),World Bank,Access to electricity ,World Bank,DNA,0,100
+"GDP per capita, PPP (current international $)",World Bank,"GDP per capita, PPP ",World Bank,PSE030,0,
+GINI index,World Bank,GINI index,World Bank,PSE210,0,100
+"GNI per capita, PPP (current international $)",World Bank,"GNI per capita, PPP ",World Bank,PSE090,0,
+"GNI, PPP (current international $)",World Bank,"GNI, PPP ",World Bank,DNA,0,
+"Household final consumption expenditure, PPP (constant 2005 international $)",World Bank,"Household final consumption expenditure, PPP ",World Bank,PSE130,0,
+Logistics performance index: Overall (1=low to 5=high),World Bank,Logistics performance index: Overall ,World Bank,PCX130,1,5
+Number of infant deaths,World Bank,Number of infant deaths,World Bank,DNA,0,
+Population in urban agglomerations of more than 1 million,World Bank,Population in urban agglomerations of more than 1 million,World Bank,PSP110,0,
+"Roads, total network (km)",World Bank,"Roads, total network ",World Bank,PVL030,0,
+Poverty headcount ratio at $1.25 a day (PPP) (% of population),World Bank,Poverty headcount ratio at $1.25 a day (PPP) ,World Bank,PSE170,0,100
+Rail lines (total route-km),World Bank,Rail lines ,World Bank,PVL040,0,
+accuweather_url,accuweather,AccuWeather URL,Accuweather,CG260,,
+gna-ci,echo,GNA Crisis Index,ECHO Europa,PVX020,,
+gna-vi,echo,GNA Vulnerability Index,ECHO Europa,PVX010,,
+emdat:no_affected,emdat,People affected by disasters,EM-DAT,CH090,0,
+emdat:no_disasters,emdat,Number of disasters,EM-DAT,CH070,0,
+emdat:no_homeless,emdat,People made homeless by disasters,EM-DAT,DNA,0,
+emdat:no_injured,emdat,People injured in disasters,EM-DAT,DNA,0,
+emdat:no_killed,emdat,People killed in disasters,EM-DAT,CH080,0,
+emdat:total_affected,emdat,Total number of people affeccted by disasters,EM-DAT,DNA,0,
+emdat:total_dam,emdat,Total cost of damage done by disasters,EM-DAT,CH100,0,
+WPP2012_MORT_F01_1_IMR_BOTH_SEXES,esa-unpd-WPP2012,WPP2012_MORT_F01_1_IMR_BOTH_SEXES,esa-unpd,PVH150,,
+WPP2012_MORT_F01_2_Q5_BOTH_SEXES,esa-unpd-WPP2012,WPP2012_MORT_F01_2_Q5_BOTH_SEXES,esa-unpd,PVH100,,
+WPP2012_MORT_F02_CRUDE_DEATH_RATE,esa-unpd-WPP2012,WPP2012_MORT_F02_CRUDE_DEATH_RATE,esa-unpd,DNA,,
+WPP2012_MORT_F03_1_DEATHS_BOTH_SEXES,esa-unpd-WPP2012,WPP2012_MORT_F03_1_DEATHS_BOTH_SEXES,esa-unpd,PVH050,,
+WPP2012_MORT_F07_1_LIFE_EXPECTANCY_0_BOTH_SEXES,esa-unpd-WPP2012,WPP2012_MORT_F07_1_LIFE_EXPECTANCY_0_BOTH_SEXES,esa-unpd,PVH010,,
+WPP2012_POP_F01_1_TOTAL_POPULATION_BOTH_SEXES,esa-unpd-WPP2012,WPP2012_POP_F01_1_TOTAL_POPULATION_BOTH_SEXES,esa-unpd,PSP010,,
+WPP2012_POP_F02_POPULATION_GROWTH_RATE,esa-unpd-WPP2012,WPP2012_POP_F02_POPULATION_GROWTH_RATE,esa-unpd,PSP050,,
+WPP2012_POP_F05_MEDIAN_AGE,esa-unpd-WPP2012,WPP2012_POP_F05_MEDIAN_AGE,esa-unpd,PSP070,,
+WPP2012_POP_F06_POPULATION_DENSITY,esa-unpd-WPP2012,WPP2012_POP_F06_POPULATION_DENSITY,esa-unpd,PSP080,,
+WUP2011-F02-Proportion_Urban,esa-unpd-WUP2011,WUP2011-F02-Proportion_Urban,esa-unpd,PSP100,,
+undernourishment,fao-foodsec,Prevalence of undernourishment,FAO-Food Security,PVN010,0,
+calories_per_person,faostat3,Per capita food supply,FAOstat,PVF020,0,
+HDI:98606,hdi-disaster,Impact of natural disasters: number of deaths,Human Development Indicators,PVX060,,
+m49-name,m49,m49-name,m49,DNA,,
+m49-num,m49,m49-num,m49,CG060,,
+Fixed telephone lines per 100 inhabitants,mdgs,Fixed telephone lines per 100 inhabitants,Millennium Development Goals,PCX080,0,100
+Internet users per 100 population,mdgs,Internet users per 100 population,Millennium Development Goals,PCX070,0,100
+Mobile cellular subscriptions per 100 inhabitants,mdgs,Mobile cellular subscriptions per 100 inhabitants,Millennium Development Goals,PCX051,0,100
+"Proportion of the population using improved drinking water sources, total",mdgs,Proportion of the population using improved drinking water sources,Millennium Development Goals,PVW010,,
+"Proportion of the population using improved sanitation facilities, total",mdgs,Proportion of the population using improved sanitation facilities,Millennium Development Goals,PVW040,,
+"Total net enrolment ratio in primary education, both sexes",mdgs,Total net enrolment ratio in primary education,Millennium Development Goals,PVE130,,
+"Children 1 year old immunized against measles, percentage",mdgs,Children 1 year old immunized against measles,Millennium Development Goals,DNA,,
+"Children under 5 moderately or severely underweight, percentage",mdgs,Children under 5 moderately or severely underweight,Millennium Development Goals,PVN050,,
+"Children under five mortality rate per 1,000 live births",mdgs,,Millennium Development Goals,PVH140,0,1000
+"Maternal mortality ratio per 100,000 live births",mdgs,,Millennium Development Goals,PVH190,0,100000
+"Population undernourished, millions",mdgs,Population undernourished,Millennium Development Goals,DNA,0,
+"Population undernourished, percentage",mdgs,Population undernourished,Millennium Development Goals,DNA,0,100
+Routine EPI vaccines financed by government,unicef-infobycountry,Routine EPI vaccines financed by government,UNICEF info by country,PCH090,,
+% of routine EPI vaccines financed by government,unicef-infobycountry,% of routine EPI vaccines financed by government,UNICEF info by country,DNA,0,100
+unterm:Capital City,unterm,Capital City,unterm,CG080,,
+unterm:Currency Abbr.,unterm,Currency Abbr.,unterm,CG120,,
+unterm:Date of Entry into UN,unterm,Date of Entry into UN,unterm,CG290,,
+unterm:Formal Name,unterm,Formal Name,unterm,CG020,,
+unterm:ISO Country alpha-2-code,unterm,ISO Country alpha-2-code,unterm,DNA,,
+unterm:ISO Country alpha-3-code,unterm,ISO Country alpha-3-code,unterm,CG070,,
+unterm:ISO Currency Code,unterm,ISO Currency Code,unterm,CG140,,
+unterm:Languages,unterm,Languages,unterm,CG100,,
+unterm:Short Name,unterm,Short Name,unterm,CG030,,
+Adolescent fertility rate (per 1000 girls aged 15-19 years),who-athena,Adolescent fertility rate (per 1000 girls aged 15-19 years),World Health Organization - Athena,DNA,0,1000
+"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - All causes",who-athena,"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - All causes",World Health Organization - Athena,DNA,0,100000
+"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cancer",who-athena,"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cancer",World Health Organization - Athena,DNA,0,100000
+"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cardiovasular disease and diabetes",who-athena,"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Cardiovasular disease and diabetes",World Health Organization - Athena,DNA,0,100000
+"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Chronic respiratory conditions",who-athena,"Age-standardized mortality rate by cause (ages 30-70, per 100 000 population) - Chronic respiratory conditions",World Health Organization - Athena,DNA,0,100000
+Alcohol consumption among adults aged ?15 years (litres of pure alcohol per person per year),who-athena,Alcohol consumption among adults aged ?15 years (litres of pure alcohol per person per year),World Health Organization - Athena,DNA,0,
+Annual population growth rate (%),who-athena,Annual population growth rate (%),World Health Organization - Athena,DNA,,
+Antenatal care coverage - at least four visits (%),who-athena,Antenatal care coverage - at least four visits (%),World Health Organization - Athena,DNA,0,100
+Antenatal care coverage - at least one visit (%),who-athena,Antenatal care coverage - at least one visit (%),World Health Organization - Athena,DNA,0,100
+Antiretroviral therapy coverage among people with advanced HIV infection (%),who-athena,Antiretroviral therapy coverage among people with advanced HIV infection (%),World Health Organization - Athena,DNA,0,100
+Births attended by skilled health personnel (%),who-athena,Births attended by skilled health personnel (%),World Health Organization - Athena,DNA,0,100
+Births by caesarean section (%),who-athena,Births by caesarean section (%),World Health Organization - Athena,DNA,0,100
+Cellular subscribers (per 100 population),who-athena,Cellular subscribers (per 100 population),World Health Organization - Athena,PCX110,0,100
+Cholera - number of reported cases,who-athena,Cholera - number of reported cases,World Health Organization - Athena,DNA,0,
+Contraceptive prevalence (%),who-athena,Contraceptive prevalence (%),World Health Organization - Athena,DNA,0,100
+Crude birth rate (per 1000 population),who-athena,Crude birth rate (per 1000 population),World Health Organization - Athena,DNA,0,1000
+Crude death rate (per 1000 population),who-athena,Crude death rate (per 1000 population),World Health Organization - Athena,DNA,0,1000
+Deaths due to HIV/AIDS (per 100 000 population),who-athena,Deaths due to HIV/AIDS (per 100 000 population),World Health Organization - Athena,DNA,0,100000
+Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds (%),who-athena,Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds (%),World Health Organization - Athena,DNA,0,100
+External resources for health as a percentage of total expenditure on health,who-athena,External resources for health as a percentage of total expenditure on health,World Health Organization - Athena,DNA,0,100
+General government expenditure on health as a percentage of total expenditure on health,who-athena,General government expenditure on health as a percentage of total expenditure on health,World Health Organization - Athena,DNA,0,100
+General government expenditure on health as a percentage of total government expenditure,who-athena,General government expenditure on health as a percentage of total government expenditure,World Health Organization - Athena,DNA,0,100
+Gross national income per capita (PPP int. $),who-athena,Gross national income per capita (PPP int. $),World Health Organization - Athena,DNA,,
+Hepatitis B (HepB3) immunization coverage among 1-year-olds (%),who-athena,Hepatitis B (HepB3) immunization coverage among 1-year-olds (%),World Health Organization - Athena,DNA,0,100
+Hib (Hib3) immunization coverage among 1-year-olds (%),who-athena,Hib (Hib3) immunization coverage among 1-year-olds (%),World Health Organization - Athena,DNA,0,100
+Malaria - number of reported cases,who-athena,Malaria - number of reported cases,World Health Organization - Athena,DNA,0,
+Malaria - number of reported deaths,who-athena,Malaria - number of reported deaths,World Health Organization - Athena,DNA,0,
+Maternal mortality ratio (per 100 000 live births) - Interagency estimates,who-athena,Maternal mortality ratio (per 100 000 live births) - Interagency estimates,World Health Organization - Athena,PVH100,0,100000
+Measles (MCV) immunization coverage among 1-year-olds (%),who-athena,Measles (MCV) immunization coverage among 1-year-olds (%),World Health Organization - Athena,DNA,0,100
+Measles - number of reported cases,who-athena,Measles - number of reported cases,World Health Organization - Athena,DNA,0,
+Neonatal tetanus - number of reported cases,who-athena,Neonatal tetanus - number of reported cases,World Health Organization - Athena,DNA,0,
+Neonates protected at birth against neonatal tetanus (PAB) (%),who-athena,Neonates protected at birth against neonatal tetanus (PAB) (%),World Health Organization - Athena,DNA,0,100
+Out-of-pocket expenditure as a percentage of private expenditure on health,who-athena,Out-of-pocket expenditure as a percentage of private expenditure on health,World Health Organization - Athena,DNA,0,100
+Per capita government expenditure on health (PPP int. $),who-athena,Per capita government expenditure on health (PPP int. $),World Health Organization - Athena,DNA,0,
+Per capita government expenditure on health at average exchange rate (US$),who-athena,Per capita government expenditure on health at average exchange rate (US$),World Health Organization - Athena,DNA,0,
+Per capita total expenditure on health (PPP int. $),who-athena,Per capita total expenditure on health (PPP int. $),World Health Organization - Athena,DNA,0,
+Per capita total expenditure on health at average exchange rate (US$),who-athena,Per capita total expenditure on health at average exchange rate (US$),World Health Organization - Athena,DNA,0,
+Population (in thousands) total,who-athena,Population (in thousands) total,World Health Organization - Athena,DNA,0,
+Population living in urban areas (%),who-athena,Population living in urban areas (%),World Health Organization - Athena,DNA,0,100
+Population median age (years),who-athena,Population median age (years),World Health Organization - Athena,DNA,0,
+Population proportion over 60 (%),who-athena,Population proportion over 60 (%),World Health Organization - Athena,DNA,0,100
+Population proportion under 15 (%),who-athena,Population proportion under 15 (%),World Health Organization - Athena,DNA,0,100
+Postnatal care visit within two days of birth (%),who-athena,Postnatal care visit within two days of birth (%),World Health Organization - Athena,DNA,0,100
+Prevalence of HIV among adults aged 15 to 49 (%),who-athena,Prevalence of HIV among adults aged 15 to 49 (%),World Health Organization - Athena,DNA,0,100
+Private expenditure on health as a percentage of total expenditure on health,who-athena,Private expenditure on health as a percentage of total expenditure on health,World Health Organization - Athena,DNA,0,100
+Rubella - number of reported cases,who-athena,Rubella - number of reported cases,World Health Organization - Athena,DNA,0,
+"Total (recorded + unrecorded) adult (15+ years) per capita consumption, projected estimates for 2008",who-athena,"Total (recorded + unrecorded) adult (15+ years) per capita consumption, projected estimates for 2008",World Health Organization - Athena,DNA,0,
+Total density per million population: Computed tomography,who-athena,Total density per million population: Computed tomography,World Health Organization - Athena,DNA,0,1000000
+Total expenditure on health as a percentage of gross domestic product,who-athena,Total expenditure on health as a percentage of gross domestic product,World Health Organization - Athena,PCH010,0,100
+Total fertility rate (per woman),who-athena,Total fertility rate (per woman),World Health Organization - Athena,DNA,0,
+Total tetanus - number of reported cases,who-athena,Total tetanus - number of reported cases,World Health Organization - Athena,DNA,0,
+"Antiretroviral therapy coverage among people with advanced HIV infection (%), WHO 2006 guidelines",who-athena,"Antiretroviral therapy coverage among people with advanced HIV infection (%), WHO 2006 guidelines",World Health Organization - Athena,DNA,0,100
+Children aged <5 years with fever who received treatment with any antimalarial (%),who-athena,Children aged <5 years with fever who received treatment with any antimalarial (%),World Health Organization - Athena,DNA,0,100
+Estimated percentage of pregnant women living with HIV who received antiretrovirals for preventing mother-to-child transmission,who-athena,Estimated percentage of pregnant women living with HIV who received antiretrovirals for preventing mother-to-child transmission,World Health Organization - Athena,DNA,0,100
+Literacy rate among adults aged >= 15 years (%),who-athena,Literacy rate among adults aged >= 15 years (%),World Health Organization - Athena,PVE050,0,100
+Pertussis - number of reported cases,who-athena,Pertussis - number of reported cases,World Health Organization - Athena,DNA,0,
+Total density per million population: Radiotherapy,who-athena,Total density per million population: Radiotherapy,World Health Organization - Athena,DNA,0,1000000
+Children aged <5 years with ARI symptoms taken to a health facility (%),who-athena,Children aged <5 years with ARI symptoms taken to a health facility (%),World Health Organization - Athena,DNA,0,100
+Children aged <5 years with ARI symptoms who took antibiotic treatment (%),who-athena,Children aged <5 years with ARI symptoms who took antibiotic treatment (%),World Health Organization - Athena,DNA,0,100
+Children aged <5 years with diarrhoea receiving ORT (%),who-athena,Children aged <5 years with diarrhoea receiving ORT (%),World Health Organization - Athena,DNA,0,100
+Most recent census (year),who-athena,Most recent census (year),World Health Organization - Athena,DNA,0,
+Mumps - number of reported cases,who-athena,Mumps - number of reported cases,World Health Organization - Athena,DNA,0,
+Number of nursing and midwifery personnel,who-athena,Number of nursing and midwifery personnel,World Health Organization - Athena,DNA,0,
+Number of physicians,who-athena,Number of physicians,World Health Organization - Athena,DNA,0,
+Nursing and midwifery personnel density (per 10 000 population),who-athena,Nursing and midwifery personnel density (per 10 000 population),World Health Organization - Athena,DNA,0,10000
+Physicians density (per 10 000 population),who-athena,Physicians density (per 10 000 population),World Health Organization - Athena,PCH030,0,10000
+Social security expenditure on health as a percentage of general government expenditure on health,who-athena,Social security expenditure on health as a percentage of general government expenditure on health,World Health Organization - Athena,DNA,0,100
+Unmet need for family planning (%),who-athena,Unmet need for family planning (%),World Health Organization - Athena,DNA,0,100
+Civil registration coverage of births (%),who-athena,Civil registration coverage of births (%),World Health Organization - Athena,DNA,0,100
+Density of pharmaceutical personnel (per 10 000 population),who-athena,Density of pharmaceutical personnel (per 10 000 population),World Health Organization - Athena,PCH040,0,10000
+Dentistry personnel density (per 10 000 population),who-athena,Dentistry personnel density (per 10 000 population),World Health Organization - Athena,DNA,0,10000
+Ill-defined causes in cause-of-death registration (%),who-athena,Ill-defined causes in cause-of-death registration (%),World Health Organization - Athena,DNA,0,100
+Number of dentistry personnel,who-athena,Number of dentistry personnel,World Health Organization - Athena,DNA,0,
+Number of pharmaceutical personnel,who-athena,Number of pharmaceutical personnel,World Health Organization - Athena,DNA,0,
+Private prepaid plans as a percentage of private expenditure on health,who-athena,Private prepaid plans as a percentage of private expenditure on health,World Health Organization - Athena,DNA,0,100
+Civil registration coverage of cause-of-death (%),who-athena,Civil registration coverage of cause-of-death (%),World Health Organization - Athena,DNA,0,100
+Diphtheria - number of reported cases,who-athena,Diphtheria - number of reported cases,World Health Organization - Athena,DNA,0,
+Low-birth-weight newborns (%),who-athena,Low-birth-weight newborns (%),World Health Organization - Athena,DNA,0,100
+Median availability of selected generic medicines (%) - Private,who-athena,Median availability of selected generic medicines (%) - Private,World Health Organization - Athena,DNA,0,100
+Median availability of selected generic medicines (%) - Public,who-athena,Median availability of selected generic medicines (%) - Public,World Health Organization - Athena,PCH080,0,100
+Median consumer price ratio of selected generic medicines - Private,who-athena,Median consumer price ratio of selected generic medicines - Private,World Health Organization - Athena,DNA,,
+Children aged 6-59 months who received vitamin A supplementation (%),who-athena,Children aged 6-59 months who received vitamin A supplementation (%),World Health Organization - Athena,DNA,0,100
+Meningitis - number of reported cases,who-athena,Meningitis - number of reported cases,World Health Organization - Athena,DNA,0,
+Median consumer price ratio of selected generic medicines - Public,who-athena,Median consumer price ratio of selected generic medicines - Public,World Health Organization - Athena,PCH110,,
+Yellow fever - number of reported cases,who-athena,Yellow fever - number of reported cases,World Health Organization - Athena,DNA,0,
+H5N1 influenza - number of reported cases,who-athena,H5N1 influenza - number of reported cases,World Health Organization - Athena,PVH210,0,
+Japanese encephalitis - number of reported cases,who-athena,Japanese encephalitis - number of reported cases,World Health Organization - Athena,DNA,0,
+Congenital Rubella Syndrome - number of reported cases,who-athena,Congenital Rubella Syndrome - number of reported cases,World Health Organization - Athena,DNA,0,
+Density of environment and public health workers (per 10 000 population),who-athena,Density of environment and public health workers (per 10 000 population),World Health Organization - Athena,DNA,0,10000
+Number of environment and public health workers,who-athena,Number of environment and public health workers,World Health Organization - Athena,DNA,0,
+Plague - number of reported cases,who-athena,Plague - number of reported cases,World Health Organization - Athena,DNA,0,
+Age-standardized mortality rate by cause (per 100 000 population) - Communicable,who-athena,Age-standardized mortality rate by cause (per 100 000 population) - Communicable,World Health Organization - Athena,DNA,0,100000
+Age-standardized mortality rate by cause (per 100 000 population) - Injuries,who-athena,Age-standardized mortality rate by cause (per 100 000 population) - Injuries,World Health Organization - Athena,DNA,0,100000
+Age-standardized mortality rate by cause (per 100 000 population) - Noncommunicable,who-athena,Age-standardized mortality rate by cause (per 100 000 population) - Noncommunicable,World Health Organization - Athena,DNA,0,100000
+Case detection rate for all forms of tuberculosis,who-athena,Case detection rate for all forms of tuberculosis,World Health Organization - Athena,DNA,0,
+Community health workers density (per 10 000 population),who-athena,Community health workers density (per 10 000 population),World Health Organization - Athena,PCH050,0,10000
+Deaths due to tuberculosis among HIV-negative people (per 100 000 population),who-athena,Deaths due to tuberculosis among HIV-negative people (per 100 000 population),World Health Organization - Athena,DNA,0,100000
+Distribution of causes of death among children aged <5 years (%) - Birth asphyxia,who-athena,Distribution of causes of death among children aged <5 years (%) - Birth asphyxia,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Congenital anomalies,who-athena,Distribution of causes of death among children aged <5 years (%) - Congenital anomalies,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Diarrhoea,who-athena,Distribution of causes of death among children aged <5 years (%) - Diarrhoea,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Injuries,who-athena,Distribution of causes of death among children aged <5 years (%) - Injuries,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Measles,who-athena,Distribution of causes of death among children aged <5 years (%) - Measles,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Neonatal sepsis,who-athena,Distribution of causes of death among children aged <5 years (%) - Neonatal sepsis,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Other diseases,who-athena,Distribution of causes of death among children aged <5 years (%) - Other diseases,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Pneumonia,who-athena,Distribution of causes of death among children aged <5 years (%) - Pneumonia,World Health Organization - Athena,DNA,0,100
+Distribution of causes of death among children aged <5 years (%) - Prematurity,who-athena,Distribution of causes of death among children aged <5 years (%) - Prematurity,World Health Organization - Athena,DNA,0,100
+Distribution of years of life lost by broader causes (%) - Communicable,who-athena,Distribution of years of life lost by broader causes (%) - Communicable,World Health Organization - Athena,DNA,0,100
+Distribution of years of life lost by broader causes (%) - Injuries,who-athena,Distribution of years of life lost by broader causes (%) - Injuries,World Health Organization - Athena,DNA,0,100
+Distribution of years of life lost by broader causes (%) - Noncommunicable,who-athena,Distribution of years of life lost by broader causes (%) - Noncommunicable,World Health Organization - Athena,DNA,0,100
+Hospital beds (per 10 000 population),who-athena,Hospital beds (per 10 000 population),World Health Organization - Athena,PCH060,0,10000
+Incidence of tuberculosis (per 100 000 population per year),who-athena,Incidence of tuberculosis (per 100 000 population per year),World Health Organization - Athena,DNA,0,100000
+Number of community health workers,who-athena,Number of community health workers,World Health Organization - Athena,DNA,0,
+Prevalence of tuberculosis (per 100 000 population),who-athena,Prevalence of tuberculosis (per 100 000 population),World Health Organization - Athena,DNA,0,100000
+Smear-positive tuberculosis treatment-success rate (%),who-athena,Smear-positive tuberculosis treatment-success rate (%),World Health Organization - Athena,DNA,0,100
+Tuberculosis - new and relapse cases,who-athena,Tuberculosis - new and relapse cases,World Health Organization - Athena,DNA,0,
+Leprosy - number of reported cases,who-athena,Leprosy - number of reported cases,World Health Organization - Athena,DNA,0,
+Psychiatric beds per 10 000 population,who-athena,Psychiatric beds per 10 000 population,World Health Organization - Athena,DNA,0,10000
+WHS9_86,who-athena-other,Population (in thousands) total,World Health Organization - Athena,DNA,0,
+WHS9_88,who-athena-other,Population median age ,World Health Organization - Athena,DNA,0,
+WHS9_89,who-athena-other,Population proportion under 15 ,World Health Organization - Athena,DNA,0,
+WHS9_92,who-athena-other,Population proportion over 60 ,World Health Organization - Athena,DNA,0,
+WHS9_96,who-athena-other,Population living in urban areas ,World Health Organization - Athena,DNA,0,
+WHS9_97,who-athena-other,Annual population growth rate ,World Health Organization - Athena,DNA,,
+WHS9_90,who-athena-other,Population living on <$1 (PPP int. $) a day ,World Health Organization - Athena,DNA,0,
+worldbank-income,worldbank-lending-groups,Income Category,World Bank Lending Groups,CG150,,
