@@ -83,9 +83,17 @@ class Indicator(Base):
         self.indID = chd_id(self.indID)
         session.merge(self)
 
-Base.metadata.create_all(engine)
 
+def counter():
+    counts = [session.query(DataSet).count(),
+              session.query(Indicator).count(),
+              session.query(Value).count()]
+    print "COUNTER: {} datasets, {} indicators, {} values".format(*counts)
+
+Base.metadata.create_all(engine)
+counter()
 
 @atexit.register
 def exithandler():
+    counter()
     session.commit()

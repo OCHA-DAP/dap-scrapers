@@ -66,7 +66,8 @@ canonicalise = Memoize(country_id_nomemo)
 def canon_number(f):
     num = scrumble.as_float(f, strict=True)
     if not isinstance(num, float):
-        log.warn("Unable to transmute %r to float" % f)
+        if num != '':
+            log.warn("Unable to transmute %r to float" % f)
         return None
     return num
 

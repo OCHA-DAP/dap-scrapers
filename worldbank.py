@@ -66,11 +66,11 @@ def getcountry(threeletter="PAK"):
     baseurl = "http://api.worldbank.org/v2/en/country/{}?downloadformat=excel"
     value = {'dsID': 'World Bank',
              'region': threeletter,
-             'source': baseurl.format(threeletter.lower()),
+             'source': baseurl % threeletter.lower(),
              'is_number': True}
 
     while True:
-        fh = dl.grab(baseurl.format(threeletter.lower()), [404])
+        fh = dl.grab(baseurl % threeletter, [404])
         if not fh:
             return
         try:
@@ -78,8 +78,8 @@ def getcountry(threeletter="PAK"):
             break  # success!
         except messytables.error.ReadError, e:
             print e
-            return
-
+            time.sleep(500)
+            
     table = xypath.Table.from_messy(list(messy.tables)[0])
     indicators = table.filter(is_in(indicator_list))
     indname = indicators.shift(x=-1)
