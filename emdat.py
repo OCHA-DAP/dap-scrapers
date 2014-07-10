@@ -43,7 +43,6 @@ def doit():
         years = yr.fill(xypath.DOWN)
         cats = yr.fill(xypath.RIGHT)
         for year, cat, value in years.junction(cats):
-            print year, cat, value
             value = {'dsID': 'emdat',
                      'region': country,
                      'indID': 'emdat:{}'.format(cat.value),
@@ -52,7 +51,6 @@ def doit():
                      'source': url,
                      'is_number': True}
             orm.Value(**value).save()
-            print value
     orm.session.commit()
 
 targets = 'occurrence deaths injured affected homeless total_affected total_damage'.split(' ')
