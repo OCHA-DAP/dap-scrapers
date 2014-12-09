@@ -63,6 +63,7 @@ def get_metadata(socrata_id):
     return parse_metadata(socrata_id, tree)
 
 def parse_metadata(socrata_id, tree):
+    print repr(tree)
     #return {'name': tree['meta']['view']['name'],
     #        'attribution': tree['meta']['view']['attribution'],
     #        'description': tree['meta']['view']['description'],

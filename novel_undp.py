@@ -3,6 +3,10 @@ import datetime
 import requests
 from orm import session, Value, DataSet, Indicator
 import orm
+import logging
+
+logging.basicConfig()
+
 """Value: dsID, region, indID, period, value, source, is_number
    DataSet: dsID, last_updated, last_scraped, name
    Indicator: indID, name, units
@@ -21,19 +25,80 @@ data_url = "http://data.undp.org/resource/{}.json"
 lookup = [{'soc':'ku9i-8fxp', 
            'fieldname':'gender_inequality_index_value_2013',
            'indID':'HDR:68606',
-           'unit': 'index'}]
+           'unit': 'index'},
+
+          {'soc':'myer-egms',
+           'fieldname':'_2013_gross_national_income_gni_per_capita_2011_ppp',
+           'indID':'chd.eco.135',
+           'unit': '2011 PPP $',
+           'period': '2013'},
+
+          {'soc':'xn26-t7qa',
+           'fieldname':'expenditure_on_education_of_gdp_2005_2012',
+           'indID':'PVE010',
+           'unit': '% of GDP',
+           'period': '2005-2012'},
+
+          {'soc':'5tuc-d2a9',
+           'fieldname':'mean_years_of_schooling',
+           'indID':'PVE110',
+           'unit': 'years'},
+
+          {'soc':'5tuc-d2a9',
+           'fieldname':'population_living_below_1_25_a_day',
+           'indID':'PSE160',
+           'unit': '%'},
+
+          {'soc':'5tuc-d2a9',
+           'fieldname':'expected_years_of_schooling',
+           'indID':'PVE030',
+           'unit':'years'},
+          
+          {'soc':'5tuc-d2a9',
+           'fieldname':'maternal_mortality_ratio_deaths_per_100_000_live_births',
+           'indID':'PVH180',
+           'unit':'per 100,000 live births'},
+
+          {'soc':'5tuc-d2a9',
+           'fieldname':'adult_literacy_rate_ages_15_and_older',
+           'indID':'PVE040',
+           'unit':'%'},
+
+          {'soc':'5tuc-d2a9',
+           'fieldname':'impact_of_natural_disasters_number_of_deaths_per_year_per_million_people',
+           'indID':'not_known',
+           'unit':'per year per million people'},
+
+          {'soc':'sf29-qtcx',
+           'fieldname':'effects_of_environmental_threats_impact_of_natural_disasters_population_affected_per_year_per_million_people_2005_2012',
+           'indID':'PVX070',
+           'unit':'per year per million people',
+           'period':'2005-2012'},
+
+          {'soc':'myer-egms',
+           'fieldname':'hdi_rank',
+           'indID':'PSE220',
+           'unit':'rank'},
+
+          {'soc':'5tuc-d2a9',
+           'fieldname':'under_five_mortality_rate',
+           'indID': 'PVH120',
+           'unit': 'per 100,000 live births'},
+
+]
 
 #lookup = {
-#          "ku9i-8fxp": "HDR:68606",  # GII: Gender Inequality Index, value
-          #"u2dx-####": "PSE110",  # GNI per capita in PPP terms (constant 2005 international $)
-          #"bkr7-####": "PVE010",  # Public expenditure on education (% of GDP) (%)
-          #"m67k-####": "PVE110",  # Mean years of schooling (of adults)|years
-          #"jbhn-####": "PVE120",  # Combined gross enrolment in education (both sexes)
-          #"ehe9-####": "PSE160",  # MPI: Population living below $1.25 PPP per day (%)
-          #"a4ay-####": "PVH120",  # Under-five mortality
-          #"qnam-####": "PVE030",  # Expected Year of Schooling (of children)
-          #"4gkx-####": "PVH180",  # Maternal mortality ratio
-          #"x22y-####": "PVE040",  # Adult literacy rate, both sexes (% aged 15 and above)
+#          OK "ku9i-8fxp": "HDR:68606",  # GII: Gender Inequality Index, value
+          #OK "u2dx-####": "PSE110",  # GNI per capita in PPP terms (constant 2005 international $)
+          #OK"bkr7-####": "PVE010",  # Public expenditure on education (% of GDP) (%)
+          #OK"m67k-####": "PVE110",  # Mean years of schooling (of adults)|years
+   #TODO       #"jbhn-####": "PVE120",  # Combined gross enrolment in education (both sexes)
+          #OK"ehe9-####": "PSE160",  # MPI: Population living below $1.25 PPP per day (%)
+          #???"a4ay-####": "PVH120",  # Under-five mortality
+          #OK"qnam-####": "PVE030",  # Expected Year of Schooling (of children)
+          #OK"4gkx-####": "PVH180",  # Maternal mortality ratio
+          #OK"x22y-####": "PVE040",  # Adult literacy rate, both sexes (% aged 15 and above)
+          
 
          # "---------": "------",  # Impact of natural disasters: number of deaths
          # "XXXXXXXXX": "PSE220",  # Human Development Index rank (in all of them)
@@ -44,7 +109,7 @@ def get_period(s):
     p = re.findall('(?:19|20)\d\d', s)
     if len(p) == 0:
         return '2014'
-    assert len(p) == 1
+    assert len(p) == 1, "Many periods! {!r}".format(p)
     return p[0]
 
 class SocrataData(object):
@@ -63,9 +128,11 @@ class SocrataData(object):
     def name_for_fieldname(self, fieldname):
         try:
             name, = [x['name'] for x in self.columns if x['fieldName'] == fieldname]
-        except:
-            print x
+        except Exception:
+            print [x['fieldName'] for x in self.columns]
+            print "Couldn't find {}".format(fieldname)
             raise
+        return name
 
     @property
     def column_fieldnames(self):
@@ -80,7 +147,10 @@ class SocrataData(object):
         return [dict(zip(self.column_fieldnames, row)) for row in self.rows]
 
     def extract(self, fieldname):
-        return [{'region': x['country'], 'value': x[fieldname]} for x in self.combined]
+        try:
+            return [{'region': x['country'], 'value': x[fieldname]} for x in self.combined]
+        except Exception:
+            return [{'region': x['countries'], 'value': x[fieldname]} for x in self.combined]
 
     def export(self, meta):
         ind = {'indID': meta['indID'],
@@ -88,8 +158,10 @@ class SocrataData(object):
                'units': meta['unit']}
         Indicator(**ind).save()
 
-
         for item in self.extract(meta['fieldname']):
+            if not item.get('region'):
+                logging.warn("No region in {}".format(meta))
+                continue
             value = {'dsID': dsID,
                      'region': item['region'],
                      'period': meta.get('period') or get_period(meta['fieldname']),
@@ -97,12 +169,14 @@ class SocrataData(object):
                      'indID': meta['indID'],
                      'source': self.url,
                      'is_number': meta.get('is_number') or True}
-            if item['region']:
+            if value['region'] and value['value']:
+                print value
                 Value(**value).save()
         
-soc = SocrataData('ku9i-8fxp')
-# print soc.extract('gender_inequality_index_value_2013')
-soc.export(lookup[0])
+for item in lookup:
+    soc_data = SocrataData(item['soc'])
+# print soc_data.extract('gender_inequality_index_value_2013')
+    soc_data.export(item)
 
 
 """Value: dsID, region, indID, period, value, source, is_number
