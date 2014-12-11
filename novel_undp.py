@@ -25,7 +25,7 @@ data_url = "http://data.undp.org/resource/{}.json"
 lookup = [{'soc':'ku9i-8fxp', 
            'fieldname':'gender_inequality_index_value_2013',
            'indID':'HDR:68606',
-           'unit': 'index'},
+           'unit': 'Index'},
 
           {'soc':'myer-egms',
            'fieldname':'_2013_gross_national_income_gni_per_capita_2011_ppp',
@@ -36,54 +36,54 @@ lookup = [{'soc':'ku9i-8fxp',
           {'soc':'xn26-t7qa',
            'fieldname':'expenditure_on_education_of_gdp_2005_2012',
            'indID':'PVE010',
-           'unit': '% of GDP',
+           'unit': 'Percentage',
            'period': '2005-2012'},
 
           {'soc':'5tuc-d2a9',
            'fieldname':'mean_years_of_schooling',
            'indID':'PVE110',
-           'unit': 'years'},
+           'unit': 'Years'},
 
           {'soc':'5tuc-d2a9',
            'fieldname':'population_living_below_1_25_a_day',
            'indID':'PSE160',
-           'unit': '%'},
+           'unit': 'Percentage'},
 
           {'soc':'5tuc-d2a9',
            'fieldname':'expected_years_of_schooling',
            'indID':'PVE030',
-           'unit':'years'},
+           'unit': 'Years'},
           
           {'soc':'5tuc-d2a9',
            'fieldname':'maternal_mortality_ratio_deaths_per_100_000_live_births',
            'indID':'PVH180',
-           'unit':'per 100,000 live births'},
+           'unit':'Deaths per 100,000 live births'},
 
           {'soc':'5tuc-d2a9',
            'fieldname':'adult_literacy_rate_ages_15_and_older',
            'indID':'PVE040',
-           'unit':'%'},
+           'unit':'Percentage'},
 
           {'soc':'5tuc-d2a9',
            'fieldname':'impact_of_natural_disasters_number_of_deaths_per_year_per_million_people',
            'indID':'not_known',
-           'unit':'per year per million people'},
+           'unit':'People affected per 1,000,000 people per year'},
 
           {'soc':'sf29-qtcx',
            'fieldname':'effects_of_environmental_threats_impact_of_natural_disasters_population_affected_per_year_per_million_people_2005_2012',
            'indID':'PVX070',
-           'unit':'per year per million people',
+           'unit':'People affected per 1,000,000 people per year',
            'period':'2005-2012'},
 
           {'soc':'myer-egms',
            'fieldname':'hdi_rank',
            'indID':'PSE220',
-           'unit':'rank'},
+           'unit':'Index'},
 
           {'soc':'5tuc-d2a9',
            'fieldname':'under_five_mortality_rate',
            'indID': 'PVH120',
-           'unit': 'per 100,000 live births'},
+           'unit': 'Deaths per 1,000 live births'},
 
 ]
 
