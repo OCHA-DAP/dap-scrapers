@@ -24,8 +24,8 @@ dataset = {"dsID": "enrol-undp",
           }
 
 indicator = {"indID": "PVE120",
-             "name": "Combined gros enrolment in education (both sexes",
-             "units": "%"
+             "name": "Combined gross enrolment in education (both sexes)",
+             "units": "Percentage"
             }
 
 output_template = {"dsID": "enrol-undp",
