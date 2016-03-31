@@ -1,4 +1,4 @@
-import requests
+import dshelpers
 import lxml.html
 import orm
 
@@ -28,7 +28,7 @@ value_template = {"dsID": "worldaerodata",
 
 
 def do_airports(baseurl):
-    html = requests.get(baseurl).content
+    html = dshelpers.request_url(baseurl).content
     root = lxml.html.fromstring(html)
     root.make_links_absolute(baseurl)
     country_links = root.xpath("//li/a")
@@ -36,7 +36,7 @@ def do_airports(baseurl):
     for country in country_links:
         country_name = country.text
         country_url = country.attrib['href']
-        country_html = requests.get(country_url).content
+        country_html = dshelpers.request_url(country_url).content
         country_root = lxml.html.fromstring(country_html)
         airports = len(country_root.xpath("//table//table//a"))
         yield country_name, airports
