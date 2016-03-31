@@ -33,13 +33,13 @@ def discover_table(all_tables):
     found = []
     for table in all_tables.tables:
         t = xypath.Table.from_messy(table)
-        if t.filter(re.compile(".*Prevalence of Undernourishment.*")).filter(lambda cell: cell.y==0) \
+        if t.filter(re.compile(".*Prevalence of [Uu]ndernourishment.*")).filter(lambda cell: cell.y==0) \
             and t.filter(lambda cell: cell.x==7 and cell.value):
             found.append(t)
     if len(found) != 1:
         print found
         print len(found), "found"
-        raise RuntimeError
+        raise RuntimeError, "expected 1 found {}".format(len(found))
     return found[0]
 
 

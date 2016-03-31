@@ -71,7 +71,11 @@ def parse_metadata(socrata_id, tree):
     #        'createdat': datetime.datetime.fromtimestamp(tree['meta']['view']['createdAt']),
     #        'pubdate': datetime.datetime.fromtimestamp(tree['meta']['view']['publicationDate'])
     #       }
-    raw_name = tree['meta']['view']['name']
+    try:
+        raw_name = tree['meta']['view']['name']
+    except Exception:
+        print tree
+        raise
     justname, units = parse_file_string(raw_name)
 
     return {"indID": lookup[socrata_id],

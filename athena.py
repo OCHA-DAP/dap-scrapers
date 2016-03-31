@@ -49,10 +49,13 @@ def do_indicator(ind):
     fh = dl.grab(baseurl % ind)
     mt, = messytables.commas.CSVTableSet(fh).tables
     mt_list = list(mt)
-    headers = mt_list[0]
+    try:
+        headers = mt_list[0]
+    except IndexError:
+        headers = []
     if len(headers) == 0:
-        print ind
-        exit()
+        print "Error getting headers from ", ind
+        raise RuntimeError("No header in {}".format(ind) )
     logging.warn("headers {!r}".format(headers))
     rest = mt_list[1:]
     for row in rest:
@@ -60,7 +63,12 @@ def do_indicator(ind):
             continue  # skip empty row
 
         rowdict = {x[0].value: x[1].value for x in zip(headers, row)}
-        name, unit = units(rowdict['GHO (DISPLAY)'])
+        try:
+            name, unit = units(rowdict['GHO (DISPLAY)'])
+        except Exception:
+            fh.seek(0)
+            print fh.read()
+            raise
         indID = rowdict['GHO (CODE)']
         for lookup in ["SEX", "RESIDENCEAREATYPE", "EDUCATIONLEVEL", "WEALTHQUINTILE"]:
             lookup_code = lookup+" (CODE)"
@@ -87,8 +95,15 @@ def do_indicator(ind):
         orm.Value(**value_dict).save()
         # print value_dict
         
+fail = 0
 for ind in indicators:
-    do_indicator(ind)
+    try:
+        do_indicator(ind)
+    except Exception as e:
+        print e
+        fail = 1
+exit(fail)
+    
 
 # headers: Counter({u'REGION (DISPLAY)': 137, u'Comments': 137, u'Low': 137, u'YEAR (DISPLAY)': 137, u'YEAR (URL)': 137, u'GHO (DISPLAY)': 137, u'YEAR (CODE)': 137, u'PUBLISHSTATE (DISPLAY)': 137, u'GHO (CODE)': 137, u'Display Value': 137, u'REGION (URL)': 137, u'PUBLISHSTATE (URL)': 137, u'REGION (CODE)': 137, u'COUNTRY (DISPLAY)': 137, u'GHO (URL)': 137, u'PUBLISHSTATE (CODE)': 137, u'COUNTRY (URL)': 137, u'COUNTRY (CODE)': 137, u'Numeric': 137, u'High': 137, u'WORLDBANKINCOMEGROUP (DISPLAY)': 113, u'WORLDBANKINCOMEGROUP (CODE)': 113, u'WORLDBANKINCOMEGROUP (URL)': 113, u'SEX (CODE)': 9, u'SEX (DISPLAY)': 9, u'SEX (URL)': 9, u'RESIDENCEAREATYPE (DISPLAY)': 5, u'RESIDENCEAREATYPE (URL)': 5, u'RESIDENCEAREATYPE (CODE)': 5, u'DATASOURCE (DISPLAY)': 2, u'DATASOURCE (CODE)': 2, u'DATASOURCE (URL)': 2})
 

@@ -123,7 +123,11 @@ class SocrataData(object):
     @property
     def columns(self):
         # name, fieldName
-        return self.jdata['meta']['view']['columns']
+        try:
+            return self.jdata['meta']['view']['columns']
+        except Exception:
+            print self.jdata
+            raise
 
     def name_for_fieldname(self, fieldname):
         try:
