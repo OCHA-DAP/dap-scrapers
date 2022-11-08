@@ -43,6 +43,7 @@ def parse_file_string(filestring):
    
 def main():
   for sheet in spreadsheets:
+    print sheet
     shortname = sheet.split('/')[-1].split('.')[0]
     dsID = 'esa-unpd-' + shortname.replace('_', '-').split('-')[0]
     year_text, = re.findall('\d{4}', dsID)
